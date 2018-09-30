@@ -1,0 +1,240 @@
+
+#parse("layout/header.vm")
+
+<div role="navigation" class="navbar-default sidebar" style="position: fixed; margin-top: 0px">
+    <div class="sidebar-nav navbar-collapse">
+        <ul id="side-menu" class="nav">
+            <li>
+                <a href="#dependencies">依赖脚本</a>
+                <a href="#configurations">配置项</a>
+                <a href="#serverCode">Server端代码</a>
+                <a href="#basic">基本用法</a>
+                <a href="#dataAttr">data属性配置</a>
+                <a href="#">返回顶部</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">upload</li>
+        </ol>
+    </div>
+
+
+
+
+    <div class="panel panel-info" id="dependencies">
+        <div class="panel-heading">依赖脚本</div>
+        <div class="panel-body">
+<pre><code><xmp>
+<link type="text/css" rel="stylesheet" href="\${staticSiteUrl}/lib/fileinput/css/fileinput.min.css">
+<script type="text/javascript" src="\${staticSiteUrl}/lib/fileinput/js/fileinput.js"></script>
+<script type="text/javascript" src="\${staticSiteUrl}/mtime/upload/upload.js"></script></xmp></code></pre>
+        </div>
+    </div>
+
+    <div class="panel panel-info" id="server">
+        <div class="panel-heading">Server端代码</div>
+        <div class="panel-body">
+<pre><code><xmp>@RequestMapping("/upload")
+    @ResponseBody
+    public Map<String, Object> upload(MultipartFile file, @RequestParam(required = false) String bucket) {
+    Map<String, Object> result = new HashMap<>();
+    //此处根据自己的业务逻辑保存文件对象
+    /* 代码省略 */
+    result.put("state", true);
+    result.put("msg", "上传成功");
+    return result;
+}
+</xmp></code></pre>
+            <div class="alert alert-warning">PS：MultipartFile参数名（这里是file）要与input[type=file]的name属性值一直，如果不一致，需要通过@RequestParam注解手动指定，如upload(@RequestParam(name = "alias") MultipartFile file)</div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-info" id="configurations">
+        <div class="panel-heading">配置项</div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th width="170">配置项</th>
+                <th width="200">data属性</th>
+                <th width="200">值类型</th>
+                <th width="130">默认值</th>
+                <th>说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>uploadUrl</td>
+                <td>data-upload-url</td>
+                <td>string</td>
+                <td><i>空字符串</i></td>
+                <td>
+                    异步上传路径
+                </td>
+            </tr>
+            <tr>
+                <td>bucket</td>
+                <td>data-bucket</td>
+                <td>string</td>
+                <td><i>空字符串</i></td>
+                <td>
+                    时光网上传附件分类标识参数
+                </td>
+            </tr>
+            <tr>
+                <td>editable</td>
+                <td>data-editable</td>
+                <td>boolean</td>
+                <td>true</td>
+                <td>
+                    是否为可编辑模式，可编辑模式下文件选择按钮可见，可以上传删除文件，只读模式下文件选择按钮不可见，不能上传删除附件
+                </td>
+            </tr>
+            <tr>
+                <td>multi</td>
+                <td>data-multi</td>
+                <td>boolean</td>
+                <td>false</td>
+                <td>
+                    是否多选模式，也可以通过设置input的multiple属性来设置
+                </td>
+            </tr>
+            <tr>
+                <td>initValue</td>
+                <td>data-init-value</td>
+                <td>string<i>|</i>object</td>
+                <td><i>空字符串</i></td>
+                <td>
+                    json对象或json字符串，指定初始化文件数据，默认格式为{id:"",imageUrl:"",filename:""}<br>
+                    如果不是默认json格式，则需要重写showInitialPreviewItem配置项
+                </td>
+            </tr>
+            <tr>
+                <td>showInitialPreviewItem</td>
+                <td></td>
+                <td>function</td>
+                <td>function(obj) { return obj; }</td>
+                <td>
+                    初始化数据时数据格式化函数
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div class="panel panel-info" id="serverCode">
+        <div class="panel-heading">Server端代码</div>
+        <div class="panel-body">
+            <div class="alert alert-warning">
+                <strong>文件上传不支持jsonp类型</strong><br>
+                服务器端返回数据类型与配置项ajaxSettings有关，根据ajaxSettings中的dataType类型返回数据，默认为json
+            </div>
+        </div>
+    </div aside>
+
+
+
+    <div class="panel panel-info" id="basic">
+        <div class="panel-heading">基本用法</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">效果预览</div>
+                        <div class="panel-body">
+                            <input id="test1" type="file" multiple>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">配置项选择</div>
+                        <div class="panel-body">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="cb1" for="test1" data-name="editable" data-value="false"> 只读模式
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="cb1" for="test1" data-name="multi" data-value="true"> 多选模式
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="cb1" for="test1" data-name="initValue" data-value="[{id:1,imageUrl:'/img/docs/1.jpg',filename:'1.jpg'}]"> 设置初始化数据
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-warning">插件简写形式：<strong>.fi()</strong>. </div>
+<pre><code><xmp><input id="test1" type="file" data-min-file-count="0"></xmp></code></pre>
+<pre><code>$("#test1").upload({
+    uploadUrl: "/fi/upload"  //上传路径
+    , bucket: "movie_cover"     // 文件类别标识
+    , editable: true  //可编辑模式
+    , initValue: "" //初始数据：object或object数组，
+    , multi: false  //是否允许多选
+    , showInitialPreviewItem: function(obj) {   //返回一个json，{id:"", imageUrl:"", filename:""}，将每一条初始数据对象转为指定格式的对象
+        return obj;
+    }
+})
+//简写形式如下：
+$("#test1").fi({
+    uploadUrl: "/fi/upload"  //上传路径
+    , bucket: "movie_cover"     // 文件类别标识
+    , editable: true  //可编辑模式
+    , initValue: "" //初始数据：object或object数组，
+    , multi: false  //是否允许多选
+    , showInitialPreviewItem: function(obj) {   //返回一个json，{id:"", imageUrl:"", filename:""}，将每一条初始数据对象转为指定格式的对象
+        return obj;
+    }
+})</code></pre>
+        </div>
+    </div>
+
+
+
+    <div class="panel panel-info" id="dataAttr">
+        <div class="panel-heading">data属性配置</div>
+        <div class="panel-body">
+            <div class="alert alert-warning">使用属性<strong>role="upload"</strong>可以使插件自动初始化</div>
+            <input id="test2" type="file"
+                   data-upload-url="/fi/upload"
+                   data-backet="movie_cover"
+                   data-editable="true"
+                   data-multi="true"
+                   data-init-value="[{id:1,imageUrl:'/img/docs/1.jpg',filename:'1.jpg'}]"
+                   role="upload">
+<pre class="mt10"><code><xmp><input id="test2" type="file"
+       data-upload-url="/fi/upload"
+       data-backet="movie_cover"
+       data-editable="true"
+       data-multi="true"
+       data-init-value="[{id:1,imageUrl:'/img/docs/1.jpg',filename:'1.jpg'}]"
+       role="upload"></xmp></code></pre>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+#setCss(
+    "/lib/fileinput/css/fileinput.min.css"
+)
+#setJs(
+    "/lib/fileinput/js/fileinput.js",
+    "/mtime/upload/upload.js",
+    "/js/view/upload/demo.js"
+)

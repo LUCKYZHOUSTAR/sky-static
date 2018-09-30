@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+#parse("layout/header.vm")
+
+<body>
+
+<div id="wrapper">
+    #parse("layout/nav.vm")
+
+
+    $screen_content
+
+    <footer class="footer">
+        <div class="text-center">© 2015 Mtime, Inc.</div>
+    </footer>
+</div>
+<!-- /#wrapper -->
+
+#foreach($url in $jsUrls)
+<script type="text/javascript" src="$url"></script>
+#end
+#if($jsCodes)
+<script type="text/javascript">$!jsCodes</script>
+#end
+</body>
+
+</html>

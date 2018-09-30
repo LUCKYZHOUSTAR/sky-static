@@ -1,0 +1,147 @@
+@import "variables";
+
+.loginbox{
+    width: 100%;
+    margin: 100px auto;
+}
+
+/* 超小屏幕（手机，小于 768px） 移动设备优先 */
+//find password
+.find-passwordbox{
+    margin: 100px auto;
+    width: 70%;
+}
+.find-passwordbox2{
+    margin: 70px auto;
+    width: 45%;
+}
+.find-password{
+    height: 40px;
+    .progress-bar{
+        background: #1e93d2;
+        box-shadow: 1px 1px 3px rgba(0,0,0,.1) inset;
+        width: 25%;
+        line-height: 40px;
+    }
+     .progress-bar1{
+        background: #1e93d2;
+        box-shadow: 1px 1px 3px rgba(0,0,0,.1) inset;
+        width: 16.6%;
+        line-height: 40px;
+    }
+    .progress-null{
+        background:transparent;
+        color: #333;
+    }
+}
+
+/* 小屏幕（平板，大于等于 768px） */
+@media (min-width: @screen-sm-min) {
+    .loginbox{
+        width: 70%;
+        margin: 100px auto;
+    }
+    //find password
+    .find-passwordbox{
+        margin: 100px auto;
+        width: 70%;
+    }
+    .find-passwordbox2{
+        margin: 70px auto;
+        width: 45%;
+    }
+    .find-password{
+        height: 40px;
+        .progress-bar{
+            background: #1e93d2;
+            box-shadow: 1px 1px 3px rgba(0,0,0,.1) inset;
+            width: 25%;
+            line-height: 40px;
+        }
+        .progress-bar1{
+            background: #1e93d2;
+            box-shadow: 1px 1px 3px rgba(0,0,0,.1) inset;
+            width: 16.6%;
+            line-height: 40px;
+        }
+        .progress-null{
+            background:transparent;
+            color: #333;
+        }
+    }
+
+}
+
+/* 中等屏幕（桌面显示器，大于等于 992px） */
+@media (min-width: @screen-md-min) {
+    .loginbox{
+        width: 60%;
+        margin: 100px auto;
+    }
+    //find password
+    .find-passwordbox{
+        margin: 100px auto;
+        width: 70%;
+    }
+    .find-passwordbox2{
+        margin: 70px auto;
+        width: 45%;
+    }
+    .find-password{
+        height: 40px;
+        .progress-bar{
+            background: #1e93d2;
+            box-shadow: 1px 1px 3px rgba(0,0,0,.1) inset;
+            width: 25%;
+            line-height: 40px;
+        }
+         .progress-bar1{
+            background: #1e93d2;
+            box-shadow: 1px 1px 3px rgba(0,0,0,.1) inset;
+            width: 16.6%;
+            line-height: 40px;
+        }
+        .progress-null{
+            background:transparent;
+            color: #333;
+        }
+    }
+
+}
+
+/* 大屏幕（大桌面显示器，大于等于 1200px） */
+@media (min-width: @screen-lg-min) {
+    .loginbox{
+        width: 50%;
+        margin: 100px auto;
+    }
+
+    //find password
+    .find-passwordbox{
+        margin: 100px auto;
+        width: 70%;
+    }
+    .find-passwordbox2{
+        margin: 70px auto;
+        width: 45%;
+    }
+    .find-password{
+        height: 40px;
+        .progress-bar{
+            background: #1e93d2;
+            box-shadow: 1px 1px 3px rgba(0,0,0,.1) inset;
+            width: 25%;
+            line-height: 40px;
+        }
+         .progress-bar1{
+            background: #1e93d2;
+            box-shadow: 1px 1px 3px rgba(0,0,0,.1) inset;
+            width: 16.66%;
+            line-height: 40px;
+        }
+        .progress-null{
+            background:transparent;
+            color: #333;
+        }
+    }
+}

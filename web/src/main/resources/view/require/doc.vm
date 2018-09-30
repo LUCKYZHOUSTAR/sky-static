@@ -1,0 +1,59 @@
+#parse("layout/header.vm")
+
+
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">Require</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Require <small>动态引入css/js资源文件</small></h1>
+
+            <div class="alert alert-info">
+                解决问题: 由于页面大量使用了ajax请求, 导致页面所需要的资源文件引入过多, 造成加载缓慢, 而并非所有引入资源都会被使用, 造成了网络资源的浪费.
+            </div>
+
+            <h3>脚本引入</h3>
+            <pre><code><xmp><script type="text/javascript" src="${staticSiteUrl}/mtime/require/mtime.require.js"></xmp></code></pre>
+
+            <h3>Demo</h3>
+            <p>动态加载datagrid组件</p>
+            <pre><code class="typescript">Mtime.Net.ModulesLoader.require("Mtime.DataGrid", () => { console.log($.fn.datagrid); )});</code></pre>
+            <button id="btn-datagrid" type="button" class="btn btn-primary">测试</button>
+            <p>可以同时引入多个模块:</p>
+            <pre><code class="typescript">Mtime.Net.ModulesLoader.require(["Mtime.DataGrid","Moment"], () => { console.log($.fn.datagrid); )});</code></pre>
+            <p>可以同时引入某个资源文件:</p>
+            <pre><code class="typescript">Mtime.Net.ModulesLoader.require(["Mtime.DataGrid","Moment","http://static.dev.cmc.com/mtime/tree/listdom.js"], () => { console.log($.fn.datagrid); )});</code></pre>
+
+
+
+            <h3>注册自己的资源文件</h3>
+            <p>动态加载datagrid组件</p>
+            <pre><code class="typescript">Mtime.Net.ModulesLoader.register("MyModule", {
+    files: ["http://static.qas.cmc.com/mtime/tree/listdom.js"]
+});</code></pre>
+
+            <div class="alert alert-info">
+                 模块名称必须唯一. 已注册模块列表请查看<b><a href="/mtime/require/mtime.require.js" target="_blank">Require源码</a></b>
+            </div>
+
+
+
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <br/>
+
+</div>
+
+
+#setJs(
+    "/mtime/require/mtime.require.js",
+    "/js/view/require/require.js"
+)
+
+

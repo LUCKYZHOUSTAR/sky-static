@@ -1,0 +1,91 @@
+#parse("layout/header.vm")
+
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">Dispatcher</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Dispatcher</h1>
+
+        <h1 class="page-header">事件分发</h1>
+
+        <p>在列表页经常需要对每条记录进行操作, 如果直接对每条记录绑定事件, 效率和性能都很低, Dispatcher 组件就是为了解决这类而生的.</p>
+
+        <h3>脚本引入</h3>
+        <pre><code><xmp><script type="text/javascript" src="${staticSiteUrl}/mtime/util/mtime.util.js"></xmp></code></pre>
+        <p>注意: 总部系统后台门户默认布局模板已经集成了这些组件, 不再需要单独引入这些 JS</p>
+
+        <h3>添加事件标识</h3>
+<p>事件是通过给 DOM 元素添加自定义的 data-action 属性来派发的</p>
+<pre><code class="html">&lt;button class="btn btn-xs btn-danger" data-action="delete-user">删除&lt;/button></code></pre>
+
+<h3>创建事件分发器</h3>
+<p>Dispatcher 类封装了事件派发的细节, 如果用过 jQuery 应该很熟悉</p>
+<pre><code class="typescript">let dispatcher = new Mtime.Util.Dispatcher().bind("#table-users");
+dispatcher.on("delete-user", this.deleteUser.bind(this));</code></pre>
+<div class="panel panel-info">
+        <div class="panel-heading"><i class="fa fa-info fa-fw"></i> 示例</div>
+        <table id="table-users" class="table table-bordered table-hover table-striped table-condensed">
+        <thead>
+        <tr>
+        <th>ID</th>
+        <th>姓名</th>
+        <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>1</td>
+        <td>张三</td>
+        <td>
+        <button class="btn btn-xs btn-danger" data-action="delete-user">删除</button>
+        </td>
+        </tr>
+        <tr>
+        <td>2</td>
+        <td>李四</td>
+        <td>
+        <button class="btn btn-xs btn-danger" data-action="delete-user">删除</button>
+        </td>
+        </tr>
+        <tr>
+        <td>3</td>
+        <td>王麻子</td>
+        <td>
+        <button class="btn btn-xs btn-danger" data-action="delete-user">删除</button>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+
+        <h3>注意事项</h3>
+        <p>如果同一个 DOM 元素上绑定了多个事件, 只会触发第一个</p>
+<pre><code class="typescript">let dispatcher1 = new Mtime.Util.Dispatcher().bind("#table-users");
+dispatcher1.on("delete-user", this.deleteUser.bind(this));
+
+// 不会触发
+let dispatcher2 = new Mtime.Util.Dispatcher().bind(document);
+dispatcher2.on("delete-user", e => {
+    alert("不会触发");
+});</code></pre>
+<p>上面 delete-user 上绑定的第二个事件因为重复绑定会被忽略, 不会触发</p>
+
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <br/>
+
+</div>
+
+
+#setJs(
+    "/js/view/util/dispatcher.js"
+)
+
+

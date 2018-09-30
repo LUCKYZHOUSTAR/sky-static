@@ -1,0 +1,92 @@
+#parse("layout/header.vm")
+#setJs(
+  "/js/view/net/ajax.js"
+)
+##<div role="navigation" class="navbar-default sidebar" style="position: fixed; margin-top: 0px">
+##    <div class="sidebar-nav navbar-collapse">
+##        <ul id="side-menu" class="nav">
+##            <li>
+##                <a href="#dependencies">依赖脚本</a>
+##                <a href="#base">datagrid入门</a>
+##                <a href="#advanced">datagrid进阶</a>
+##                <a href="#customSource">自定义数据源</a>
+##                <a href="#html">HTML规范</a>
+##                <a href="#configuration">配置说明</a>
+##                <a href="#events">事件说明</a>
+##                <a href="#methods">方法说明</a>
+##                <a href="#server_response">服务端响应</a>
+##                <a href="#datagridPicker">Picker支持</a>
+##                <a href="#">返回顶部</a>
+##            </li>
+##        </ul>
+##    </div>
+##</div>
+
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">AJAX</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Ajax</h1>
+
+            <h3>脚本引入</h3>
+            <pre><code><xmp><script type="text/javascript" src="${staticSiteUrl}/mtime/dialog/mtime.dialog.js">
+<script type="text/javascript" src="${staticSiteUrl}/mtime/bootstrap/mtime.bootstrap.js">
+<script type="text/javascript" src="${staticSiteUrl}/mtime/ajax/mtime.ajax.js"></xmp></code></pre>
+        <div class="alert alert-info">引入 mtime.dialog.js 和 mtime.bootstrap.js 只是为了友好的显示错误提示框(注意: 总部系统后台门户默认布局模板已经集成了这些组件, 不再需要单独引入这些 JS)</div>
+
+            <h3>get</h3>
+            <p>以 GET 方式获取 JSON 数据</p>
+            <pre><code class="typescript">Mtime.Net.Ajax.get("/net/ajax/get-user", {id: 1}).trigger(e.target).json<User>(u => {
+    alert(JSON.stringify(u));
+});</code></pre>
+            <button id="btn-json" type="button" class="btn btn-default">测试</button>
+
+            <h3>post</h3>
+            <p>以 JSON 方式编码发送请求</p>
+            <pre><code class="typescript">Mtime.Net.Ajax.post("/net/ajax/post-user-by-json", {id: 2}).trigger(e.target).json<User>(u => {
+    alert(JSON.stringify(u));
+});</code></pre>
+            <button id="btn-postjson" type="button" class="btn btn-default">测试</button>
+        <br/>
+        <p style="margin-top:10px">以 FORM 方式编码发送请求</p>
+            <pre><code class="typescript">Mtime.Net.Ajax.post("/net/ajax/post-user-by-form", {id: 3}).encoder("form").trigger(e.target).json<User>(u => {
+    alert(JSON.stringify(u));
+});</code></pre>
+            <button id="btn-postform" type="button" class="btn btn-default">测试</button>
+
+        <h3>自定义错误处理</h3>
+<pre><code class="typescript">let handler = (xhr: JQueryXHR, textStatus: string, error: string) => {
+    $alert(textStatus, "自定义错误处理");
+};
+ajax.get("/net/ajax/404").trigger(e.target).errorHandler(handler).text(r => {
+    $alert(r);
+});</code></pre>
+<button id="btn-error" type="button" class="btn btn-default">测试</button>
+
+        <h3>对 async/await 的支持</h3>
+<p>async/await 可以让你以同步的方式优雅的编写异步代码, 原本它们是在 ES7 才支持的, 不过借助 TypeScript, 我们能提前享受到这个福利(注意如果要对 ES3 兼容需要 TypeScript v2.1+)</p>
+        <pre><code class="typescript">private async testAsyncAwait(e: JQueryEventObject) {
+    // 从此过上幸福的没有 callback 的日子
+    let u = await $ajax.get("/net/ajax/get-user", {id: 1}).trigger (e.target).json<User>();
+    $alert(JSON.stringify(u));
+}
+$("#btn-async").click(this.testAsyncAwait.bind(this));</code></pre>
+<button id="btn-async" type="button" class="btn btn-default">测试</button>
+
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <br/>
+
+</div>
+
+
+
+
+

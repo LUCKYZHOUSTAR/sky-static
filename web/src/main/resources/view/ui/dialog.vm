@@ -1,0 +1,68 @@
+#parse("layout/header.vm")
+
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">Dialog</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Dialog</h1>
+
+            <h3>脚本引入</h3>
+            <pre><code><xmp><script type="text/javascript" src="${staticSiteUrl}/mtime/dialog/mtime.dialog.js">
+<script type="text/javascript" src="${staticSiteUrl}/mtime/bootstrap/mtime.bootstrap.js"></xmp></code></pre>
+            <p>注意: 总部系统后台门户默认布局模板已经集成了这些组件, 不再需要单独引入这些 JS</p>
+
+            <h3>$alert</h3>
+            <p>默认提示框</p>
+            <pre><code class="typescript">$alert("Hello", "提示");</code></pre>
+            <button id="btn-alert" type="button" class="btn btn-default">$alert</button>
+
+            <h3>$confirm</h3>
+            <p>默认确认框</p>
+            <pre><code class="typescript">$confirm("Are you OK?", "确认");</code></pre>
+            <button id="btn-confirm" type="button" class="btn btn-default">$confirm</button>
+
+            <h3>自动关闭</h3>
+            <p>Dialog 支持设置倒计时自动关闭</p>
+            <pre><code class="typescript">Mtime.UI.Dialog.create({countdown: 5}).show();</code></pre>
+            <button id="btn-countdown" type="button" class="btn btn-default">自动关闭</button>
+
+            <h3>多个弹出框</h3>
+            <p>Dialog 支持同时显示多个弹出框(注意第二个对话框自定义了宽度)</p>
+            <pre><code class="typescript">$confirm("再来一个?", "确认", dlg => {
+    $alert("啦啦啦, 我是第二个对话框~", "提示", null, {width: 360});
+});</code></pre>
+            <button id="btn-multi" type="button" class="btn btn-default">多个弹出框</button>
+
+            <h3>对话框属性</h3>
+            <p>创建对话框时可以通过传入自定义选项来自定义对话框样式与行为, 当前支持的全部属性如下</p>
+            <table class="table table-bordered table-hover table-striped table-condensed">
+                <tr><th>属性</th><th>说明</th></tr>
+                <tr><td>title</td><td>对话框标题</td></tr>
+                <tr><td>body</td><td>对话框内容</td></tr>
+                <tr><td>buttons</td><td>对话框按钮</td></tr>
+                <tr><td>width</td><td>对话框宽度</td></tr>
+                <tr><td>clazz</td><td>对话框自定义 CSS 样式</td></tr>
+                <tr><td>backdrop</td><td>是否显示遮罩, 默认 true</td></tr>
+                <tr><td>draggable</td><td>是否允许拖动, 默认 true</td></tr>
+                <tr><td>closable</td><td>是否显示右上角的关闭按钮和允许点击遮罩关闭, 默认 true</td></tr>
+                <tr><td>animate</td><td>是否开启显示和关闭时的动画, 默认 true</td></tr>
+                <tr><td>data</td><td>自定义的扩展数据</td></tr>
+            </table>
+
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <br/>
+
+</div>
+
+
+#setJs(
+    "/js/view/ui/dialog.js"
+)

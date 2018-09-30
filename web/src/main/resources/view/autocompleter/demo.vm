@@ -1,0 +1,276 @@
+
+
+#parse("layout/header.vm")
+
+<div role="navigation" class="navbar-default sidebar" style="position: fixed; margin-top: 0px">
+    <div class="sidebar-nav navbar-collapse">
+        <ul id="side-menu" class="nav">
+            <li>
+                <a href="#dependencies">依赖脚本</a>
+                <a href="#serverCode">Server端代码</a>
+                <a href="#basic">基本用法</a>
+                <a href="#dataAttr">data属性配置</a>
+                <a href="#autoInit">自动初始化</a>
+                <a href="#getVal">获取选中项值</a>
+                <a href="#">返回顶部</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb"></ol>
+    </div>
+
+
+    <div class="panel panel-info">
+        <div class="panel-heading">更新历史</div>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">2016-07-18 <span class="label label-danger">New</span></h4>
+                <p class="list-group-item-text">1. 新增了配置项forced,见<a href="#basic">基本用法</a>示例</p>
+                <p class="list-group-item-text">2. 优化了data属性配置优先级高于js配置优先级</p>
+            </li>
+        </ul>
+    </div>
+
+
+####################    依赖脚本 start    ####################
+    <div class="panel panel-warning" id="dependencies">
+        <div class="panel-heading">依赖脚本</div>
+        <div class="panel-body">
+<pre><code><xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/mtime/autocompleter/css/mtime.autocompleter.css">
+<script type="text/javascript" src="${staticSiteUrl}/mtime/autocompleter/js/mtime.autocomplete.js"></script></xmp></code></pre>
+        </div>
+    </div>
+
+
+####################    Server端代码 start    ####################
+    <div class="panel panel-danger" id="serverCode">
+        <div class="panel-heading">Server端代码</div>
+        <div class="panel-body">
+<pre><code>@RequestMapping("/demo")
+@ResponseBody
+@Anonymous
+public String test(@RequestParam(required = false) String name, String callback) {
+    List list = //此处调用自己的业务逻辑检索数据，支持列表类型和PageInfo分页类型（分页类型会自动获取items属性集合）
+    // 然后将数据json化
+    return callback + "(" + JSON.toJSONString(l) + ")";
+}</code></pre>
+            <div class="alert alert-warning">@Anonymous是位于mtime.lark.util.security.auth包下的注解，用于标识该方法允许匿名访问，一定要加上</div>
+        </div>
+    </div>
+
+
+    <div class="alert alert-danger"><strong>由于测试数据使用的生成的静态数据，请输入1至50的数字进行查询测试</strong></div>
+
+
+
+####################    最基本的用法 start    ####################
+    <div class="panel panel-info" id="basic">
+        <div class="panel-heading">基本用法</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <input class="form-control" name="extral" placeholder="动态参数">
+            </div>
+            <div class="input-group mb10">
+                <input id="autocomplete1" type="text" class="form-control" name="name" data-forced="true">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" for="autocomplete1">获取</button>
+            </span>
+            </div>
+            <div for="autocomplete1"></div>
+            <div class="panel panel-default">
+                <div class="panel-heading">HTML代码：</div>
+                <div class="panel-body">
+<pre><code><xmp><div class="input-group">
+    <input id="autocomplete1" type="text" class="form-control" name="name">
+    <span class="input-group-btn">
+        <button class="btn btn-primary" for="autocomplete1">获取</button>
+    </span>
+</div>
+<div for="autocomplete1"></div></xmp></code></pre>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">JS代码：</div>
+                <div class="panel-body">
+<pre><code>$("#autocomplete1").autocompleter({
+    source: "/ac/test/search"
+    , forced: true      //强制使用选项值，默认false，设置为true时，只能选择下拉选项中的值，不能输入其他值<span class="label label-danger">New</span>
+    , dataType: "jsonp" //请求类型
+    , jsonp: undefined  //jsonp回调函数参数名，默认为callback
+    , multi: false	    //是否多选
+    , message: $("div[for="+id+"]")    //消息提示容器，string|$()|boolean，为string表示jquery选择器，为true表示添加至input之后
+    , data: ""		    //请求所需的额外参数，string|object|function，如果是string类型，请遵循序列化字符串格式
+    , dynamicData: null	//请求所需的动态参数，string|function，如果是string类型，表示jQuery选择器，组件根据其标签判断调用val()方法还是html()方法
+    , term: ""		    //参数名，默认为input的name属性，如果没有指定name属性，则默认为term
+    , sep: ","		    //多选分隔符，默认为英文逗号","
+    , text: "{nameCN}"	//作为显示文本的字段，支持自定义规则，使用{fieldName}作为占位符，为空表示label属性
+    , input: ""		    //选择后显示到文本框中的字段，默认与text相同，支持自定义规则
+    , value: ""		    //选中值，一般是作为主键的字段值，默认与input相同，支持自定义规则
+    , valueSep: ""	    //多选模式下选中值之间的分隔符，默认与sep相同
+    , minLength: 1	    //触发搜索的最小字符数
+    , cache: true	    //是否缓存
+    , highlight: true	//是否高亮
+    // 如果是function，则返回一个json对象，表示分类字段值到要显示的分类文本的映射关系
+    , responseHandler: null	//请求成功后数据预处理，返回Array
+    , createItem: null		//创建列表项，返回li标签中的内容或者jQuery对象
+    , sorter: null			//排序
+    //其他配置项信息请查看jquery.ajax配置和jquery.ui.autocomplete配置
+})
+// autocompleter 别名：ac
+// 所以初始化也可以写为 $("#"+id).ac({.....})</code></pre>
+                    <div class="alert alert-warning">.autocompleter()可以<strong>简写为.ac()</strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+####################    data属性配置 start    ####################
+    <div class="panel panel-info" id="dataAttr">
+        <div class="panel-heading">data属性配置</div>
+        <div class="panel-body">
+            <div class="input-group mb10">
+                <input id="autocomplete2" type="text" class="form-control mb10" name="name"
+                       data-source="/ac/demo"
+                       data-data-type="jsonp"
+                       data-multi="false"
+                       data-message="div[for=autocomplete2]"
+                       data-term=""
+                       data-sep=","
+                       data-text="{nameCN}"
+                       data-input=""
+                       data-value=""
+                       data-value-sep=""
+                       data-min-length="1"
+                       data-cache="true"
+                       data-highlight="true">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" for="autocomplete2">获取</button>
+                    </span>
+            </div>
+            <div for="autocomplete2"></div>
+            <div class="panel panel-default">
+                <div class="panel-heading">HTML代码：</div>
+                <div class="panel-body">
+<pre><code><xmp><div class="input-group">
+    <input id="autocomplete2" type="text" class="form-control" name="name"
+        data-source="/ac/demo"
+        data-data-type="jsonp"
+        data-multi="false"
+        data-message="div[for=autocomplete2]"
+        data-term=""
+        data-sep=","
+        data-text="{nameCN}"
+        data-input=""
+        data-value=""
+        data-value-sep=""
+        data-min-length="1"
+        data-cache="true"
+        data-highlight="true">
+    <span class="input-group-btn">
+        <button class="btn btn-primary" for="autocomplete2">获取</button>
+    </span>
+</div>
+<div for="autocomplete2"></div></xmp></code></pre>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">JS代码：</div>
+                <div class="panel-body">
+<pre><code>$("#autocomplete2").autocompleter()</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+####################    自动初始化 start    ####################
+    <div class="panel panel-info" id="autoInit">
+        <div class="panel-heading">自动初始化</div>
+        <div class="panel-body">
+            <div class="input-group mb10">
+                <input id="autocomplete3" type="text" class="form-control mb10" name="name"
+                       role="autocompleter"
+                       data-source="/ac/demo"
+                       data-data-type="jsonp"
+                       data-multi="false"
+                       data-message="div[for=autocomplete3]"
+                       data-term=""
+                       data-sep=","
+                       data-text="{nameCN}"
+                       data-input=""
+                       data-min-length="1"
+                       data-cache="true"
+                       data-highlight="true">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" for="autocomplete3">获取</button>
+                </span>
+            </div>
+            <div for="autocomplete3"></div>
+            <div class="panel panel-default">
+                <div class="panel-heading">HTML代码：</div>
+                <div class="panel-body">
+                    <div class="alert alert-warning">注意属性role="autocompleter"表示自动调用.autocompleter()进行初始化</div>
+<pre><code><xmp><div class="input-group">
+    <input id="autocomplete3" type="text" class="form-control" name="name"
+        role="autocompleter"
+        data-source="/ac/demo"
+        data-data-type="jsonp"
+        data-multi="false"
+        data-message="div[for=autocomplete3]"
+        data-term=""
+        data-sep=","
+        data-text="{nameCN}"
+        data-input=""
+        data-min-length="1"
+        data-cache="true"
+        data-highlight="true">
+    <span class="input-group-btn">
+        <button class="btn btn-primary" for="autocomplete3">获取</button>
+    </span>
+</div>
+<div for="autocomplete3"></div></xmp></code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+####################    获取选中项值 start    ####################
+    <div class="panel panel-danger" id="getVal">
+        <div class="panel-heading">获取选中项值，JS代码：</div>
+        <div class="panel-body">
+            <div class="alert alert-warning">通过.autocompleter("selected")<strong>【简写.acSel()】</strong>方法来获取当前选中项，返回一个对象或者对象数组</div>
+            <div class="alert alert-warning">通过.autocompleter("selectedValue")<strong>【简写.acVal()】</strong>方法根据value配置和valueSep配置来获取当前选中项值</div>
+<pre><code>$("button[for]").click(function() {
+    var $input = $("#"+$(this).attr("for"))
+    var selected = $input.autocompleter("selected") //multi="true"模式下返回对象数组，multi="false"模式下返回对象
+    , selectedValue = $input.autocompleter("selectedValue")   //根据 value和valueSep配置获取选中值
+    alert("[autocompleter(\"selected\")]: " + selected)
+    alert("[autocompleter(\"selectedValue\")]: " + selectedValue)
+    //简写形式
+    selected = $input.acSel()
+    selectedValue = $input.acVal()
+    alert("[acSel()]: " + selected)
+    alert("[acVal()]: " + selectedValue)
+})</code></pre>
+        </div>
+    </div>
+####################    获取选中项值 end    ####################
+
+</div>
+
+
+#setCss(
+    "/mtime/autocompleter/css/mtime.autocompleter.css"
+)
+
+#setJs(
+    "/mtime/autocompleter/js/mtime.autocomplete.js",
+    "/js/view/autocompleter/demo.js"
+)

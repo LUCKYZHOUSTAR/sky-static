@@ -1,0 +1,69 @@
+#parse("layout/header.vm")
+
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">Pulldown</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Pulldown</h1>
+
+            <p>下拉面板</p>
+
+            <h3>样式引入</h3>
+            <pre><code><xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/mtime/pulldown/mtime.pulldown.css"></xmp></code></pre>
+
+            <h3>脚本引入</h3>
+            <pre><code><xmp><script type="text/javascript" src="${staticSiteUrl}/mtime/pulldown/mtime.pulldown.js"></xmp></code></pre>
+
+            <h3>示例</h3>
+            <button id="btn1" class="btn btn-default dropdown-toggle" data-pulldown="#pulldown1">面板 <span class="caret"></span></button>
+            <button id="btn2" class="btn btn-default dropdown-toggle" data-pulldown="#pulldown2">菜单 <span class="caret"></span></button>
+            <button id="btn3" class="btn btn-default dropdown-toggle" data-pulldown="#pulldown3">树 <span class="caret"></span></button>
+            <input id="text1" data-pulldown="#pulldown3" type="text"/>
+
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <br/>
+
+</div>
+
+<div id="pulldown1" class="pulldown pulldown-tip">
+    <div class="pulldown-panel">
+        <strong>You can put whatever HTML you want in a panel!</strong>
+    </div>
+</div>
+
+<div id="pulldown2" class="pulldown pulldown-tip">
+    <ul class="pulldown-menu">
+        <li><a href="#1">Item 1</a></li>
+        <li><a href="#2">Item 2</a></li>
+        <li><a href="#3">Item 3</a></li>
+        <li class="pulldown-divider"></li>
+        <li><a href="#4">Item 4</a></li>
+        <li><a href="#5">Item 5</a></li>
+        <li><a href="#5">Item 6</a></li>
+    </ul>
+</div>
+
+<div id="pulldown3" class="pulldown">
+    <div class="pulldown-panel">
+        <div id="tree1" class="ztree"></div>
+    </div>
+</div>
+
+#setCss(
+    "/mtime/pulldown/mtime.pulldown.css",
+    "/lib/ztree/css/ztree/ztree.css"
+)
+
+#setJs(
+    "/mtime/pulldown/mtime.pulldown.js",
+    "/lib/ztree/js/jquery.ztree.all.js",
+    "/js/view/ui/pulldown.js"
+)

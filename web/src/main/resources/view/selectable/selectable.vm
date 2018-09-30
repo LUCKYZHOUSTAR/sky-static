@@ -1,0 +1,332 @@
+#parse("layout/header.vm")
+
+<div role="navigation" class="navbar-default sidebar" style="position: fixed; margin-top: 0px">
+    <div class="sidebar-nav navbar-collapse">
+        <ul id="side-menu" class="nav">
+            <li>
+                <a href="#dependencies">脚本引入</a>
+                <a href="#list">列表下拉</a>
+                <a href="#group">分组下拉</a>
+                <a href="#parent">级联下拉</a>
+                <a href="#config">配置说明</a>
+                <a href="#events">事件说明</a>
+                <a href="#getset">取值赋值</a>
+                <a href="#">返回顶部</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">selectable</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-header">selectable 下拉组件</h1>
+
+            <h3 id="dependencies">脚本引入</h3>
+            <pre><code><xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/lib/select2/css/select2.min.css">
+<script type="text/javascript" src="${staticSiteUrl}/lib/select2/js/select2.min.js"></script>
+<script type="text/javascript" src="${staticSiteUrl}/lib/select2/js/i18n/zh-CN.js"></script>
+<script type="text/javascript" src="${staticSiteUrl}/mtime/selectable/selectable.js"></xmp></code></pre>
+            <div class="alert alert-info"><code>${staticSiteUrl}/lib/select2/js/i18n/zh-CN.js</code> 是语言包, 可根据需要引入</div>
+
+            <h3 id="list">列表下拉</h3>
+            <div class="well">
+                <select class="form-control"
+                        placeholder="请选择城市"
+                        role="selectable"
+                        data-source="/selectable/cities"
+                        data-tmpl-value="id"
+                        data-tmpl-result="name"></select>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>HTML:</h5>
+                <pre><code><xmp><select class="form-control"
+    placeholder="请选择城市"
+    role="selectable"
+    data-source="/selectable/cities"
+    data-tmpl-value="id"
+    data-tmpl-result="name"></select></xmp></code></pre>
+                </div>
+                <div class="col-md-6">
+                    <h5>Server Response:</h5>
+                    <pre><code>[{"id":104001,"name":"蚌埠市"},{"id":104002,"name":"淮南市"},{"id":104003,"name":"合肥市"},{"id":104004,"name":"芜湖市"},{"id":104005,"name":"安庆市"},{"id":104006,"name":"淮北市"},{"id":104007,"name":"铜陵市"}]</code></pre>
+                </div>
+            </div>
+            <div class="alert alert-info">支持分页加载数据, 服务器端返回分页对象PageResult即可</div>
+
+
+            <h3 id="group">分组下拉</h3>
+            <div class="well">
+                <select class="form-control"
+                        placeholder="请选择省份"
+                        role="selectable"
+                        data-source="/selectable/provinces"
+                        data-mode="group"
+                        data-tmpl-value="id"
+                        data-tmpl-result="name"
+                        data-group-tmpl-result="name"
+                        data-children-key="cities"></select>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>HTML:</h5>
+                    <pre><xmp><select class="form-control"
+    placeholder="请选择省份"
+    role="selectable"
+    data-source="/selectable/provinces"
+    data-mode="group"
+    data-tmpl-value="id"
+    data-tmpl-result="name"
+    data-group-tmpl-result="name"
+    data-children-key="cities"></select></xmp></pre>
+                </div>
+                <div class="col-md-6">
+                    <h5>Server Response:</h5>
+                    <pre><code>[{"id":104,"name":"安徽","cities":[{"id":104001,"name":"蚌埠市"},{"id":104002,"name":"淮南市"},{"id":104003,"name":"合肥市"},{"id":104004,"name":"芜湖市"},{"id":104005,"name":"安庆市"},{"id":104006,"name":"淮北市"},{"id":104007,"name":"铜陵市"}]}]</code></pre>
+                </div>
+            </div>
+            <div class="alert alert-warning">使用分组下拉时,需要设置mode="group",并设置group模式下相关配置[见<a href="#config">配置说明</a>]</div>
+
+
+            <h3 id="parent">级联下拉</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="well">
+                        <div class="input-group">
+                            <span class="input-group-addon">省</span>
+                            <select class="form-control"
+                                    id="province"
+                                    role="selectable"
+                                    data-selected="103"
+                                    data-force="true"
+                                    data-source="/selectable/provinces"
+                                    data-auto="true"
+                                    data-tmpl-value="id"
+                                    data-tmpl-result="name"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="well">
+                        <div class="input-group">
+                            <span class="input-group-addon">市</span>
+                            <select class="form-control"
+                                    placeholder="请选择城市"
+                                    role="selectable"
+                                    data-selected="103004"
+                                    data-source="/selectable/cities"
+                                    data-parent="#province"
+                                    data-parent-key="provinceId"
+                                    data-tmpl-value="id"
+                                    data-tmpl-result="name"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>HTML:</h5>
+                    <pre><xmp><select class="form-control"
+    id="province"
+    placeholder="请选择省份"
+    role="selectable"
+    data-source="/selectable/provinces"
+    data-selected="103"
+    data-auto="true"
+    data-tmpl-value="id"
+    data-tmpl-result="name"></select>
+<select class="form-control"
+    placeholder="请选择城市"
+    role="selectable"
+    data-source="/selectable/cities"
+    data-parent="#province"
+    data-selected="103004"
+    data-parent-key="provinceId"
+    data-tmpl-value="id"
+    data-tmpl-result="name"></select></xmp></pre>
+                </div>
+                <div class="col-md-6">
+                    <h5>Server Response:</h5>
+                    <p>初始加载省数据:</p>
+                    <pre><code>[{"id":100,"name":"北京","cities":[{"id":100001,"name":"北京市"}]},{"id":101,"name":"重庆","cities":[{"id":101001,"name":"重庆市"}]},{"id":102,"name":"山西","cities":[{"id":102001,"name":"吕梁市"},{"id":102002,"name":"阳泉市"},{"id":102003,"name":"长治市"},{"id":102004,"name":"晋城市"},{"id":102005,"name":"朔州市"},{"id":102006,"name":"晋中市"}]},{"id":103,"name":"辽宁","cities":[{"id":103001,"name":"大连市"},{"id":103002,"name":"鞍山市"},{"id":103003,"name":"抚顺市"},{"id":103004,"name":"沈阳市"},{"id":103005,"name":"锦州市"}]},{"id":104,"name":"安徽","cities":[{"id":104001,"name":"蚌埠市"},{"id":104002,"name":"淮南市"},{"id":104003,"name":"合肥市"},{"id":104004,"name":"芜湖市"},{"id":104005,"name":"安庆市"},{"id":104006,"name":"淮北市"},{"id":104007,"name":"铜陵市"}]}]</code></pre>
+                    <p>选择"安徽"省后:</p>
+                    <pre><code>[{"id":104001,"name":"蚌埠市"},{"id":104002,"name":"淮南市"},{"id":104003,"name":"合肥市"},{"id":104004,"name":"芜湖市"},{"id":104005,"name":"安庆市"},{"id":104006,"name":"淮北市"},{"id":104007,"name":"铜陵市"}]</code></pre>
+                </div>
+            </div>
+            <div class="alert alert-info">使用级联下拉,可将parent下拉设置为auto=true,这样页面加载的时候会自动加载parent中的数据</div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>JS动态改变默认选中项</p>
+                    <pre><code>$("selecte").selectable("changeDefaultSelected", ["103", "104"])</code></pre>
+                </div>
+            </div>
+
+
+            <h3 id="config">配置说明</h3>
+            <div>
+
+                <h5>HTML配置项: </h5>
+            <pre><xmp><select class="form-control"
+    multiple="multiple"                      <!-- 是否支持多选 -->
+    role="selectable"                         <!-- 是否自动初始化 -->
+    placeholder="请选择"                      <!-- placeholder提示 -->
+    data-source="/selectable/provinces"       <!-- data属性配置,对应于JS配置中的source,优先级高于JS配置, 其他data属性类似 -->
+    data-tmpl-result="name"                   <!-- 见JS配置中的tmplResult -->
+></select></xmp></pre>
+                <h5>JS配置项: </h5>
+                <pre>
+source: undefined   // string|function|array|undefined, 数据源: 默认undefined,表示初始化html中的静态数据, string|function表示ajax请求, array表示js数组
+, mode: "list"      // enum[string], 指定数据显示模式, list列表模式, group分组模式
+, language: "en"    // string, 语言, 默认英文, 如果需要改变语言, 则需要引入对应的语言包
+, maxSelectionLength: Infinity      // number, 默认无穷大, 用于控制多选时的最大选中项数量
+, minInputLength: 1                 // number, 允许搜索时, 触发搜索的最小输入字符数, 默认为1
+, maxInputLength: 10                // number, 允许搜索时, 允许输入的最大字符数, 默认为10
+, minSearchResult: 10               // number, 显示搜索输入框需要的最小选项数, 默认为10
+, selected: false                   // 默认选中项option的value值
+, auto: false                       // boolean, 默认false, 是否自动加载数据, 设置为true时,不受minInputLength配置项限制,即不需要输入查询字符,即可请求后台数据
+
+/** ajax configuration start **/
+// 查询参数配置
+, params: false 	// string|function，请求所需的动态静态参数，如果是string类型表示jQuery选择器,且必须是带有name属性的表单控件; 如果是function,须返回一个json对象
+, term: "term"		// string, 参数名，默认为term
+// 分页配置
+, pageIndexKey: "pageIndex"         // string, 当前分页页数字段名, 默认pageIndex
+, pageSizeKey: "pageSize"           // string, 当前分页数据量字段名, 默认pageSize
+, pageItemsKey: "items"             // string, 分页数据字段名, 默认items
+, pageTotalCountKey: "totalCount"   // string, 分页数据量字段名, 默认totalCount
+, pageSize: 10                      // number, 默认分页数据量, 默认10
+// 模板配置
+, tmplResult: "text"            // string, 选择面板中显示的数据, 默认显示text字段值, 可使用{name}占位符
+, tmplSelection: undefined      // string|undefined, 选中文本模板, 默认undefined,表示与tmplResult相同, 可使用{name}占位符
+, tmplValue: "id"               // string, value模板, 可使用{id}占位符
+/** ajax configuration end **/
+
+// 级联配置
+, parent: ""                // string|jQuery, 父级下拉, 如果是string,则表示jQuery选择器
+, parentKey: "parentId"     // string, 父级下拉值对应的参数名称, 默认为parentId
+
+// group模式
+, childrenKey: "children"   // group模式下, 子节点字段名
+, groupTmplResult: "text"   // group模式下, group名称, 支持{name}占位符
+, groupTmplValue: "id"      // group模式下, group值, 支持{id}占位符
+                </pre>
+            </div>
+            <div class="alert alert-info">JS配置中,配置项以驼峰式大小写命名,均可以转换成HTML配置</div>
+
+            <h3 id="events">事件说明</h3>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>事件列表</h5>
+                    <pre>
+change:         // is fired whenever an option is selected or removed.
+, open:         // is fired whenever the dropdown is opened. select2:opening is fired before this and can be prevented.
+, close:        // is fired whenever the dropdown is closed. select2:closing is fired before this and can be prevented.
+, select:       // is fired whenever a result is selected. select2:selecting is fired before this and can be prevented.
+, unselect:     // is fired whenever a result is unselected. select2:unselecting is fired before this and can be prevented.
+                    </pre>
+
+                    <h5>事件注册</h5>
+                    <pre><code>$("#select").selectable("bind", "change", function(e) {
+    $alert("change event is fired!")
+}).selectable("bind", "open", function(e) {
+    $alert("open event is fired!")
+}).selectable("bind", "select", function(e) {
+    $alert("select event is fired!")
+})</code></pre>
+                </div>
+            </div>
+            <div class="alert alert-warning">除change事件外,其他均为select2事件,可以使用jQuery原生的注册方式,但是需要在事件名前加入前缀<code>select2:</code>, 例如:</div>
+            <div class="row">
+                <div class="col-md-3">
+                    <pre><code>$("select").on("change", function(e) {
+    $alert("change is fired!")
+})</code></pre>
+                </div>
+                <div class="col-md-3">
+                    <pre><code>$("select").on("select2:open", function(e) {
+    $alert("open is fired!")
+})</code></pre>
+                </div>
+                <div class="col-md-3">
+                    <pre><code>$("select").on("select2:select", function(e) {
+    $alert("select is fired!")
+})</code></pre>
+                </div>
+                <div class="col-md-3">
+                    <pre><code>$("select").on("select2:close", function(e) {
+    $alert("close is fired!")
+})</code></pre>
+                </div>
+            </div>
+
+            <h3 id="getset">取值赋值</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>示例:</h5>
+                    <select class="form-control"
+                            id="dataTest"
+                            placeholder="请选择省份"
+                            role="selectable"
+                            data-source="/selectable/provinces"
+                            data-auto="true"
+                            data-tmpl-value="id"
+                            data-tmpl-result="name"></select>
+                    <p></p>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" id="btnGet">获取选中值</button>
+                        <button type="button" class="btn btn-default" id="btnSet">设置为"重庆"</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>HTML:</h5>
+                    <pre><code><xmp><select class="form-control"
+    id="dataTest"
+    placeholder="请选择省份"
+    role="selectable"
+    data-source="/selectable/provinces"
+    data-auto="true"
+    data-tmpl-value="id"
+    data-tmpl-result="name"></select>
+<p></p>
+<div class="btn-group">
+    <button type="button" class="btn btn-default" id="btnGet">获取选中值</button>
+    <button type="button" class="btn btn-default" id="btnSet">设置为"重庆"</button>
+</div></xmp></code></pre>
+                </div>
+                <div class="col-md-4">
+                    <h5>JS:</h5>
+                    <pre><code>var select = $("#dataTest"),
+    btnGet = $("#btnGet"),
+    btnSet = $("#btnSet")
+var selected = $("#dataTest").selectable("data")
+    $alert(JSON.stringify(selected))
+btnSet.click(function() {
+    select.selectable("data", 101)
+})</code></pre>
+                </div>
+            </div>
+            <div class="alert alert-info">获取值时,可以传入boolean类型参数,表示获取选中数据的整个对象</div>
+
+
+        </div>
+    </div>
+</div>
+
+
+#setCss(
+    "/lib/select2/css/select2.min.css"
+)
+
+#setJs(
+    "/lib/select2/js/select2.js",
+    "/lib/select2/js/i18n/zh-CN.js",
+    "/mtime/selectable/selectable.js",
+    "/js/view/selectable/selectable.js"
+)

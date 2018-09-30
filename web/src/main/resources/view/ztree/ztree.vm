@@ -1,0 +1,82 @@
+#parse("layout/header.vm")
+
+<div id="page-wrapper">
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li class="active">zTree</li>
+    </ol>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">zTree</h1>
+
+      <p>zTree 是一个依靠 jQuery 实现的多功能 “树插件”。优异的性能、灵活的配置、多种功能的组合是 zTree 最大优点. <a
+          href="http://www.treejs.cn/v3/main.php" target="_blank">[官网]</a></p>
+
+      <h3>样式引入</h3>
+      <pre><code><xmp><link type="text/css" rel="stylesheet"
+                            href="${staticSiteUrl}/lib/ztree/css/ztree/ztree.css"></xmp></code></pre>
+
+      <h3>脚本引入</h3>
+      <pre><code><xmp><script type="text/javascript"
+                              src="${staticSiteUrl}/lib/ztree/js/jquery.ztree.all.js"></xmp></code></pre>
+
+      <h3>TS 定义文件</h3>
+      <pre><code><xmp><script type="text/javascript"
+                              src="${staticSiteUrl}/typings/jquery.ztree.d.ts"></xmp></code></pre>
+
+      <h3>示例</h3>
+      <pre><code class="typescript">let options = {
+    view: {
+        selectedMulti: false
+    }
+};
+let nodes = [
+    {
+        "name": "网站导航", open: true, children: [
+        {"name": "google", "url": "http://www.google.com", "target": "_blank"},
+        {"name": "baidu", "url": "http://www.baidu.com", "target": "_blank"},
+        {"name": "sina", "url": "http://www.sina.com.cn", "target": "_blank"}
+    ]
+    }
+];
+let tree = $.fn.zTree.init($("#tree"), options, nodes);</code></pre>
+
+      <div class="panel panel-info">
+        <div class="panel-heading">简单示例</div>
+        <div class="panel-body">
+          <div id="tree1" class="ztree"></div>
+        </div>
+      </div>
+
+      <div class="panel panel-info">
+        <div class="panel-heading">下拉选择</div>
+        <div class="panel-body">
+          <input id="txt-tree" type="text"/>
+        </div>
+      </div>
+
+      <div class="alert alert-info">更多用法请参考官网示例(非常完善)</div>
+
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <br/>
+
+</div>
+
+<div id="menuContent" class="menuContent"
+     style="display:none; position: absolute; overflow-y: scroll;border: 1px solid lightgray; background: #f0f6e4 none repeat scroll 0 0">
+  <ul id="tree2" class="ztree" style="margin-top:0; height:250px; width:180px"></ul>
+</div>
+
+#setCss(
+  "/lib/ztree/css/ztree/ztree.css"
+)
+
+#setJs(
+  "/lib/ztree/js/jquery.ztree.all.js",
+  "/js/view/ztree/ztree.js"
+)

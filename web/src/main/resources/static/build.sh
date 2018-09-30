@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+tsc --lib dom,es2015.promise,es5 --sourceMap -d --outFile mtime/mtime.all.js mtime/util/mtime.util.ts mtime/ajax/mtime.ajax.ts mtime/dialog/mtime.dialog.ts mtime/validator/mtime.validator.ts mtime/form/mtime.form.ts mtime/bootstrap/mtime.bootstrap.ts typings/**/*

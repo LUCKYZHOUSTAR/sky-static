@@ -1,0 +1,1073 @@
+
+#parse("layout/header.vm")
+
+<div role="navigation" class="navbar-default sidebar" style="position: fixed; margin-top: 0px">
+    <div class="sidebar-nav navbar-collapse">
+        <ul id="side-menu" class="nav">
+            <li>
+                <a href="#dependencies">依赖脚本</a>
+                <a href="#base">datagrid入门</a>
+                <a href="#advanced">datagrid进阶</a>
+                <a href="#customSource">自定义数据源</a>
+                <a href="#html">HTML规范</a>
+                <a href="#configuration">配置说明</a>
+                <a href="#events">事件说明</a>
+                <a href="#methods">方法说明</a>
+                <a href="#server_response">服务端响应</a>
+                <a href="#datagridPicker">Picker支持</a>
+                <a href="#">返回顶部</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">DataGrid</li>
+        </ol>
+    </div>
+
+    ################# 更新历史
+    <div class="panel panel-info">
+        <div class="panel-heading">更新历史</div>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">2017-02-16 <span class="label label-danger">New</span></h4>
+                <p class="list-group-item-text"><a href="#showData_prepend">showData支持向表格第一行添加数据</a></p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">2016-10-21</h4>
+                <p class="list-group-item-text"><a href="#operBtnCondition">对简单数据级按钮权限的支持</a></p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">2016-10-21</h4>
+                <p class="list-group-item-text"><a href="#sortable">新增排序参数支持</a></p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">2016-09-29</h4>
+                <p class="list-group-item-text"><a href="#customSource">增加function类型的source支持</a></p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">2016-07-13</h4>
+                <p class="list-group-item-text">1. 新增了preShow、preReload事件</p>
+                <p class="list-group-item-text">2. 新增了message、clearData方法</p>
+                <p class="list-group-item-text">3. 优化了showData方法，支持分页对象参数。</p>
+            </li>
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">2016-07-06</h4>
+                <p class="list-group-item-text">1. 新增配置项html、textAlign</p>
+                <p class="list-group-item-text">2. 更改了查询区域<a href="#search_area">查询按钮绑定方式</a><code>for-datagrid="load"</code></p>
+                <p class="list-group-item-text">3. 更改了部分<a href="#handler_listen">处理函数绑定方式</a></p>
+                <p class="list-group-item-text">4. 简化了部分配置</p>
+            </li>
+        </ul>
+    </div>
+
+###################################     依赖
+    <div class="panel panel-info" id="dependencies">
+        <div class="panel-heading">脚本引入</div>
+        <div class="panel-body">
+<pre><code><xmp><link type="text/css" rel="stylesheet" href="\${staticSiteUrl}/mtime/datagrid/css/datagrid.css">
+    <script type="text/javascript" src="\${staticSiteUrl}/mtime/datagrid/js/datagrid.js"></xmp></code></pre>
+            <div class="alert alert-warning">如果需要进行<a href="#date_format">时间格式化</a>输出，则还需要依赖于moment.js：</div>
+            <pre><code><xmp><script type="text/javascript" src="\${staticSiteUrl}/lib/moment/moment-with-locales.js"></script></xmp></code></pre>
+        </div>
+    </div>
+
+
+#############################    一个简单的表格
+    <div class="panel panel-info" id="base">
+        <div class="panel-heading">一个简单的表格程序</div>
+        <div class="panel-body">
+            <p class="form-control-static">做一个分页列表需要多久？只需要简单的HTML配置即可。看代码:</p>
+            <div class="row">
+                <div class="col-sm-5">
+<pre><xmp><table class="table table-bordered table-striped table-hover table-condensed" role="datagrid">
+    <tr>
+        <th data-column-type="index"></th>
+        <th data-field-name="nameCN">电影名称</th>
+        <th data-field-name="shortComment">电影简评</th>
+        <th data-field-name="duration">时长(分钟)</th>
+        <th data-field-name="year">年代</th>
+        <th data-field-name="releaseDate" data-field-type="Date">公映日期</th>
+        <th data-field-name="showtime" data-field-type="Date">放映时间</th>
+        <th data-field-name="status" data-field-type="Enum[MovieStatus]">电影状态</th>
+    </tr>
+</table></xmp></pre>
+                </div>
+                <div class="col-sm-7">
+                    <div class="panel panel-default">
+                        <table class="table table-bordered table-striped table-hover table-condensed"
+                               data-pager-opts="{pageSize:5}"
+                               role="datagrid">
+                            <tr>
+                                <th data-column-type="index"></th>
+                                <th data-field-name="nameCN" data-html="true">电影名称</th>
+                                <th data-field-name="shortComment">电影简评</th>
+                                <th data-field-name="duration">时长(分钟)</th>
+                                <th data-field-name="year">年代</th>
+                                <th data-field-name="releaseDate" data-field-type="Date">公映日期</th>
+                                <th data-field-name="showtime" data-field-type="Date">放映时间</th>
+                                <th data-field-name="status" data-field-type="Enum[MovieStatus]">电影状态</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-warning">
+                在HTML中简单配置data属性(例如data-field-name、data-column-type等)后，插件会自动初始化<code>role="datagrid"</code>的table标签，并根据其配置渲染表格，包括表格数据、分页导航等。
+            </div>
+        </div>
+    </div>
+
+
+
+
+####################################    进阶
+    <div class="panel panel-info" id="advanced">
+        <div class="panel-heading">更复杂的用法</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-5">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">1. 指定数据源</h4>
+                            <p class="list-group-item-text"><code>data-source=""</code>：URL；默认空字符串，即当前页面路径</p>
+                            <p class="list-group-item-text"><code>data-type="post"</code>：Ajax请求方式；默认post</p>
+                            <p class="list-group-item-text"><code>data-data-type="json"</code>：响应数据类型；默认json，也支持jsonp</p>
+                            <p class="list-group-item-text">datagrid兼容jQuery.ajax中除url以外的所有配置项。<a target="_blank" href="http://jquery.cuishifeng.cn/jQuery.Ajax.html">查看更多jQuery.ajax配置</a></p>
+                        </li>
+                        <li class="list-group-item" id="search_area">
+                            <h4 class="list-group-item-heading">2. 关联查询条件区</h4>
+                            <p class="list-group-item-text"><code>data-search-form=""</code>：查询条件区对应的jq选择器</p>
+                            <p class="list-group-item-text"><h5>对于查询条件区中的按钮设置</h5></p>
+                            <ul>
+                                <li><code>for-datagrid="load"</code>：点击该按钮，会自动调用表格插件的load方法来加载数据</li>
+                                <li><code>for-datagrid="reload"</code>：点击该按钮，会自动调用表格插件的reload方法来刷新数据</li>
+                                <li><code>for-datagrid="clearSearchForm"</code>：点击该按钮，会自动调用表格插件的clearSearchForm方法来清空查询条件</li>
+                            </ul>
+                            <p class="list-group-item-text"><i>load 与 reload方法的区别在于：load 强制从加载首页数据，reload则是刷新当前页数据</i></p>
+                        </li>
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading">3. 可选行</h4>
+                            <p class="list-group-item-text">为表头列设置属性<code>data-column-type=""</code>，该值可选值如下</p>
+                            <ul>
+                                <li><code>data-column-type="checkbox"</code>：自动渲染复选框列，同时点击表行可以选中该行复选框</li>
+                                <li><code>data-column-type="radio"</code>：自动渲染单选框列，同时点击表行可以选中该行单选框</li>
+                                <li><code>data-column-type="index"</code>：自动渲染数据行号，用于显示当前行在所有数据中的行号</li>
+                                <li><code>data-column-type="row"</code>：自动渲染表行号，用于显示当前行在表格中的行号</li>
+                                <li><code>data-column-type="tree"</code>：<span style="color: red;">暂不支持</span></li>
+                                <li>
+                                    <code>data-column-type="oper"</code>：根据配置渲染操作列按钮
+                                    <p class="list-group-item-text">1) 配置操作按钮：</p>
+                                    <p class="list-group-item-text"><code>data-oper-btns="[{txt:'查看',handler:'detail'}]"</code>：txt：按钮文本；handler：按钮处理函数名</p>
+                                    <p class="list-group-item-text">绑定按钮处理函数：<code>$(table).dgOper("detail", function(e, data, btn) {  })</code>；<a href="#oper_handler">点击查看更多</a></p>
+                                    <p class="list-group-item-text">2) 为按钮配置权限：</p>
+                                    <p class="list-group-item-text"><code>data-oper-btns="[{txt:'查看',condition:\$!perm.has('datagrid/detail'),handler:'detail'}]"</code>：condition：是否有权限</p>
+                                </li>
+                                <li>
+                                    <p class="list-group-item-text">非以上值的表列，默认数据列，用于显示数据</p>
+                                    <p class="list-group-item-text"><code>data-field-type=""</code>配置数据类型</p>
+                                    <p class="list-group-item-text">1) 时间类型：</p>
+                                    <p class="list-group-item-text"><code>data-field-type="Date"</code>：时间格式为YYYY-MM-DD HH:mm:ss，日期格式为YYYY-MM-DD</p>
+                                    <p class="list-group-item-text"><code>data-field-type="Date[YYYY/MM/DD]"</code>：在<code>[]</code>中自定义时间格式</p>
+                                    <p class="list-group-item-text">2) 枚举类型：</p>
+                                    <p class="list-group-item-text"><code>data-field-type="Enum[EnumType]"</code>：根据枚举值或名显示枚举文本</p>
+                                    <p class="list-group-item-text"><code>data-field-type="EnumName[EnumType]"</code>：根据枚举名显示枚举文本</p>
+                                    <p class="list-group-item-text"><code>data-field-type="EnumValue[EnumType]"</code>：根据枚举值显示枚举文本</p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-7">
+                    <div class="panel panel-default" id="searchform1">
+                        <div class="panel-body mx-collapse" mx-collapse="auto">
+                            <div class="mx-collapse-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">优惠券名称：</span>
+                                            <input type="text" name="name" value="" class="form-control" maxlength="20" placeholder="最大支持20个字符">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">类型：</span>
+                                            <select name="types" class="form-control" multiple>
+                                                <option value="1">动画片</option>
+                                                <option value="2">爱情片</option>
+                                            </select>
+                                        </div>
+                                    </div>
+##                                    <div class="col-sm-4">
+##                                        <div class="input-group">
+##                                            <span class="input-group-addon">类型：</span>
+##                                            <input type="checkbox" name="types" value="111">
+##                                            <input type="checkbox" name="types" value="222">
+##                                        </div>
+##                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">状态：</span>
+                                            <select name="status" class="form-control">
+                                                <option value="0">全部</option><option value="1">新建</option><option value="2">待审核</option><option value="3">审核通过</option><option value="4">驳回申请</option><option value="5">已过期</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a class="btn btn-primary btn-sm" for-datagrid="load"><span class="glyphicon glyphicon-search"></span> 查询</a>
+                                        <a class="btn btn-default btn-sm" for-datagrid="clearSearchForm"><span class="glyphicon glyphicon-repeat"></span> 清空</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <table class="table table-bordered table-striped table-hover table-condensed" id="datagrid1"
+                               data-search-form="#searchform1"
+                               data-pager-opts="{pageSize:20}"
+                               role="datagrid">
+                            <tr>
+                                <th data-column-type="checkbox"></th>
+                                <th data-column-type="index"></th>
+                                <th data-field-name="nameCN" data-html="true">电影名称</th>
+                                <th data-field-name="duration">时长(分钟)</th>
+                                <th data-field-name="year">年代</th>
+                                <th data-field-name="releaseDate" data-field-type="Date">公映日期</th>
+                                <th data-field-name="showtime" data-field-type="Date">放映时间</th>
+                                <th data-field-name="status" data-field-type="Enum[MovieStatus]">电影状态</th>
+                                <th data-column-type="oper" data-oper-btns="{txt:'查看',handler:'detail'}"></th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-group" id="handler_listen">
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">注册事件处理函数(三种方式)</h4>
+                    <p class="list-group-item-text">
+<pre><code><xmp>$(".table")
+    .dgBind("initialize", function(e) {/*代码省略*/})
+    .on("dg:initialize", function(e) {/*代码省略*/})
+    .bind("dg:initialize", function(e) {/*代码省略*/})</xmp></code></pre>
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">注册操作按钮处理函数</h4>
+                    <p class="list-group-item-text">
+<pre><code><xmp>$("table").dgOper("detail", function(event, data, btn) {/*代码省略*/})</xmp></code></pre>
+                    </p>
+                    <ul>
+                        <li>event：事件对象</li>
+                        <li>data：该行对应的数据对象</li>
+                        <li>btn：按钮jq对象</li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">注册数据单元格创建函数</h4>
+                    <p class="list-group-item-text">
+<pre><code><xmp>$("table").dgFieldTd("nameCN", function(fvalue, extra, data) {/*代码省略*/})</xmp></code></pre>
+                    </p>
+                    <ul>
+                        <li>fvalue：字段值</li>
+                        <li>extra：该列头的<code>data-extra-data</code>属性值</li>
+                        <li>data：该行对应的数据对象</li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">JS使用插件</h4>
+                    <p class="list-group-item-text">
+<pre><xmp>$("table").datagrid({
+    source: "./data.json",
+    dataType: "jsonp",
+    searchForm: "#formdata",
+    jsonpCallback: "callback",
+    selectable: true
+    })</xmp></pre>
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading">插件方法调用</h4>
+                    <p class="list-group-item-text">
+<pre><code><xmp>var selected = $(".table")
+    .datagrid("load", {name:"旺"})   // 调用load方法
+    .datagrid("getSelected")    // 调用getSelected方法，返回值赋给selected变量
+    alert(selected)</xmp></code></pre>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="panel panel-info" id="customSource">
+        <div class="panel-heading">自定义数据源</div>
+        <div class="panel-body">
+            <p class="form-control-static"><strong>使用自定义数据源时不能使用自动初始化!</strong></p>
+            <div class="row">
+                <div class="col-sm-5">
+<pre><code>$("#datagrid").datagrid({
+    source: function(data, success, error) {
+        $.ajax({
+            url: "",
+            type: "post",
+            data: data,
+            success: success,
+            error: error
+        })
+    }
+})
+    参数说明:
+    1.data: 每次请求的最终参数,包括了配置的静态参数/动态参数/分页参数等.
+    2.success: 请求成功后的回调函数, 该函数需要传入表格数据, 支持Json字符串/Array数组/Json
+    3.error: 加载数据失败时的回调函数, 如果是ajax错误, 请将三个参数均传入, 如果是自己捕获的错误, 传入一个字符串即可, 其他类型的参数将丢失.
+</code></pre>
+                </div>
+                <div class="col-sm-7">
+                    <div class="panel panel-default">
+                        <table class="table table-bordered table-striped table-hover table-condensed"
+                               data-pager-opts="{pageSize:10}"
+                               id="customSourceDatagrid">
+                            <tr>
+                                <th data-column-type="index"></th>
+                                <th data-field-name="nameCN" data-html="true" data-sort="asc 1">电影名称</th>
+                                <th data-field-name="shortComment" data-sort="desc">电影简评</th>
+                                <th data-field-name="duration" data-sort="both">时长(分钟)</th>
+                                <th data-field-name="year">年代</th>
+                                <th data-field-name="releaseDate" data-field-type="Date">公映日期</th>
+                                <th data-field-name="showtime" data-field-type="Date">放映时间</th>
+                                <th data-field-name="status" data-field-type="Enum[MovieStatus]">电影状态</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-warning">
+                在HTML中简单配置data属性(例如data-field-name、data-column-type等)后，插件会自动初始化<code>role="datagrid"</code>的table标签，并根据其配置渲染表格，包括表格数据、分页导航等。
+            </div>
+        </div>
+    </div>
+
+
+
+
+############################################
+    <div class="panel panel-info" id="html">
+        <div class="panel-heading">HTML规范</div>
+        <div class="panel-body">
+            <h4>表头th标签属性：</h4>
+            <ul class="list-group">
+                <li class="list-group-item" id="sortable">
+                    <p><code>data-sort=""</code>: 指定可排序字段, 只能针对设置了data-field-name的列进行排序, 其值规则如下：</p>
+                    <ul>
+                        <li>asc：初始状态为升序状态, eg: <code>&lt;th data-field-name="name" data-sort="asc"&gt;电影名称&lt;/th&gt;</code></li>
+                        <li>desc：初始状态为降序状态, eg: <code>&lt;th data-field-name="name" data-sort="desc"&gt;电影名称&lt;/th&gt;</code></li>
+                        <li>[其他]：初始状态为未排序状态, eg: <code>&lt;th data-field-name="name" data-sort="both"&gt;电影名称&lt;/th&gt;</code></li>
+                    </ul>
+                    <p>请求时,升序字段参数值即为字段名, 降序字段参数值在字段名之前有一个"-"号, 如<code>name</code>表示按name字段升序查询, <code>-name</code>表示按name字段降序查询, 具体的查询实现在各自后台服务中实现</p>
+                    <p>如果设置了<code>multiSort:true</code>, 即<a href="#multiSort">支持多个字段排序</a>时, 请设置各个排序字段的优先级, 优先级以正整数表示, <strong>数值越小, 优先级越高</strong>, 优先级与排序初始状态以空格分隔, 设置方式如下: </p>
+                    <code>
+                        &lt;tr&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;th data-field-name="name" data-sort="<strong>asc 3</strong>"&gt;名称&lt;/th&gt; &lt;!-- 设置初始状态为升序, 优先级为3 --&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;th data-field-name="status" data-sort="<strong>desc</strong>"&gt;状态&lt;/th&gt; &lt;!-- 设置初始状态为降序, 使用默认优先级0 --&gt;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&lt;th data-field-name="duration" data-sort="<strong>desc -1</strong>"&gt;时长&lt;/th&gt; &lt;!-- 设置初始状态为待排序, 优先级为-1 --&gt;<br>
+                        &lt;/tr&gt;
+                    </code>
+                    <p>启用多字段排序时, 排序参数值为:按优先级的顺序, 且多个排序参数值之间以","分隔的字符串,如上面例子初始化的,排序参数值为<code>-duration,-status,name</code></p>
+                    <p><a href="#sortKey">设置排序参数名称</a>, 默认名称为<code>sort</code></p>
+                </li>
+                <li class="list-group-item">
+                    <code>data-column-type=""</code>: 指定列类型，支持以下几种列类型：
+                    <ul>
+                        <li>checkbox：复选框列，用于表行多选</li>
+                        <li>radio：单选框列，用于表行单选</li>
+                        <li>index：数据行号列，用于显示当前行在所有数据中的行号</li>
+                        <li>row：当前页行号列，用于显示当前行在当前页数据中的行号</li>
+                        <li style="color: red;">tree：主表展开折叠状态列，用于显示当前数据行的展开折叠状态（暂不支持）</li>
+                        <li>oper：操作列，用于显示操作按钮</li>
+                        <li><i>default</i>：默认列类型为数据列，用于显示数据</li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <code>data-extra-data=""</code>: 指定创建单元格时额外参数，通常用于设置是否拥有指定权限权限
+                </li>
+                <li class="list-group-item"><b>data-field-name</b>: 指定数据列的字段名</li>
+                <li class="list-group-item" id="date_format">
+                    <code>data-field-type=""</code>: 指定数据类型，可使用的值如下：
+                    <ul>
+                        <li>
+                            Date<i>[date-formatter]</i>：时间类型，date-formatter表示时间格式化字符串；
+                            <ul>
+                                <li>时间格式化功能，需要moment.js的支持</li>
+                                <li>当不指定格式化字符串时：若时间字符串长度大于10，则默认格式化为YYYY-MM-DD hh:mm:ss，否则格式化为YYYY-MM-DD</li>
+                                <li>手动指定时间格式，如：Date[hh:mm YYYY/MM/DD]</li>
+                            </ul>
+                            <span style="color: red;">注：date-formatter与java中的大小写不同，它遵循的是moment.js中的大小写规范。</span>
+                        </li>
+                        <li>EnumName<i>[EnumType]</i>：根据枚举name()显示displayName()，其中EnumType表示枚举类名（不包含包名）</li>
+                        <li>EnumValue<i>[EnumType]</i>：根据枚举value()显示displayName()，其中EnumType表示枚举类名（不包含包名）</li>
+                        <li>Enum<i>[EnumType]</i>：显示枚举name()或者value()显示displayName()，其中EnumType表示枚举类名（不包含包名）</li>
+                        <li><i>default</i>：默认数据类型为普通文本类型</li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <code>data-oper-btns=""</code>：操作列按钮配置：{txt:'查看',condition:true,handler:'detail'}。
+                    <ul id="operBtnCondition">
+                        <li>除condition和handler以外，其他按钮配置项可以自定义，并且在<a href="#oper_btn_tmpl">按钮生成模板</a>中可以通过占位符使用该按钮配置项值</li>
+                        <li>2016-11-21 update<span class="label label-danger">New</span>: condition支持按钮的数据级权限配置, condition可以是function和字符串, 其this均指向当前行数据对象, 例如配置当前行status字段为3时显示此按钮, 则condition配置为
+                            <code>...., condition: 'this.status==3' ,...</code> 或者 <code>...., condition: function(td, operBtn) { return this.status === 3; } ,...</code></li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <code>data-td-class=""</code>：对当前列所有单元格添加指定样式类，如：td="text-center"表示为该列所有单元格添加text-center类，用来设置文本居中。
+                </li>
+                <li class="list-group-item">
+                    <code>data-html="false"</code>：当前列数据是否支持html文本。
+                </li>
+                <li class="list-group-item">
+                    <code>data-text-align="center"</code>：当前列数据文本对齐方式
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    ############################################
+    <div class="panel panel-info" id="configuration">
+        <div class="panel-heading">配置说明</div>
+        <table class="table table-bordered table-striped table-hover table-condensed">
+            <thead>
+            <tr>
+                <th width="100">配置项</th>
+                <th width="60">必需</th>
+                <th width="150">类型</th>
+                <th width="100">默认值</th>
+                <th>说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="multiSort">
+                <td>multiSort</td>
+                <td>否</td>
+                <td>boolean</td>
+                <td>false</td>
+                <td>
+                    true: 支持多个字段同时排序
+                    <br>false: 默认值, 只能对某一个字段进行排序
+                    <p><strong>重写排序样式:</strong></p>
+                    可以修改默认的排序样式:
+                    <br>
+                    <code>
+                    $.datagrid.defaults.sort = {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;// 设为升序状态, th为列头, jQuery对象<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;asc: function(th) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;th.removeClass("sort-desc").addClass("sort sort-asc")<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;// 设为降序状态<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;desc: function(th) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;th.removeClass("sort-asc").addClass("sort sort-desc")<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;// 设为待排序状态<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;both: function(th) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;th.removeClass("sort-asc sort-desc").addClass("sort")<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;// 清除排序样式<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;none: function(th) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;th.removeClass("sort sort-asc sort-desc")<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    }
+                    </code>
+                </td>
+            </tr>
+            <tr id="sortKey">
+                <td>sortKey</td>
+                <td>否</td>
+                <td>string</td>
+                <td>sort</td>
+                <td>
+                    用于指定排序参数名称
+                </td>
+            </tr>
+            <tr>
+                <td>source</td>
+                <td>是</td>
+                <td>string|Array</td>
+                <td></td>
+                <td>
+                    数据源
+                    <br>string:加载数据的url地址
+                    <br>Array:js数组，数组项均为json对象
+                </td>
+            </tr>
+            <tr>
+                <td>auto</td>
+                <td>否</td>
+                <td>boolean</td>
+                <td>true</td>
+                <td>插件初始化完成后是否自动加载数据</td>
+            </tr>
+            <tr>
+                <td>searchForm</td>
+                <td>否</td>
+                <td>string|jquery</td>
+                <td>undefined</td>
+                <td>
+                    查询条件区域，不一定要使用真正的form标签，js会获取该区域内部所有可用表单控件的值作为参数传递至后台。
+                    <br>string:jquery选择器
+                    <br>jquery:查询条件区域对应的jq对象
+                </td>
+            </tr>
+            <tr>
+                <td>dynamic</td>
+                <td>否</td>
+                <td>jquery|string|function</td>
+                <td>undefined</td>
+                <td>
+                    动态参数，每次查询都会带上动态参数，优先级比查询条件区域的参数优先级要低。
+                    <br>jquery:对应表单控件的jq对象，请求时，将该表单控件name属性作为参数名，表单控件值作为参数值
+                    <br>string:参数序列化字符串
+                    <br>function:将其返回值作为参数，返回值类型应为jquery|string
+                </td>
+            </tr>
+            <tr style="color: red;">
+                <td>childFields</td>
+                <td>否</td>
+                <td>boolean|string|array</td>
+                <td>false</td>
+                <td>主表外键查询字段（暂不支持主子表）</td>
+            </tr>
+            <tr id="timeout_configuration">
+                <td>timeout</td>
+                <td>否</td>
+                <td>int</td>
+                <td>8000</td>
+                <td>ajax请求最大时间</td>
+            </tr>
+            <tr>
+                <td>type</td>
+                <td>否</td>
+                <td>string</td>
+                <td>post</td>
+                <td>ajax请求方式</td>
+            </tr>
+            <tr>
+                <td>dataType</td>
+                <td>否</td>
+                <td>string</td>
+                <td>json</td>
+                <td>ajax响应数据类型</td>
+            </tr>
+            <tr>
+                <td>primaryKey</td>
+                <td>否</td>
+                <td>string</td>
+                <td>id</td>
+                <td>响应数据对象主键字段名</td>
+            </tr>
+            <tr>
+                <td>indexKey</td>
+                <td>否</td>
+                <td>string</td>
+                <td>pageIndex</td>
+                <td>响应数据分页对象当前页字段名</td>
+            </tr>
+            <tr>
+                <td>sizeKey</td>
+                <td>否</td>
+                <td>string</td>
+                <td>pageSize</td>
+                <td>响应数据分页对象单页数据量字段名</td>
+            </tr>
+            <tr>
+                <td>countKey</td>
+                <td>否</td>
+                <td>string</td>
+                <td>totalCount</td>
+                <td>响应数据分页对象总数据量字段名</td>
+            </tr>
+            <tr>
+                <td>listKey</td>
+                <td>否</td>
+                <td>string</td>
+                <td>items</td>
+                <td>响应数据分页对象中，列表数据字段名</td>
+            </tr>
+            <tr>
+                <td>selectable</td>
+                <td>否</td>
+                <td>boolean</td>
+                <td>false</td>
+                <td>单击表行是否选中该行，只对行内有:checkbox或者:radio控件的表行有作用</td>
+            </tr>
+            <tr>
+                <td>textAlign</td>
+                <td>否</td>
+                <td>string</td>
+                <td>center</td>
+                <td>表数据文本对齐方式，可选值有：left|l|center|c|right|r</td>
+            </tr>
+            <tr>
+                <td>html</td>
+                <td>否</td>
+                <td>boolean</td>
+                <td>false</td>
+                <td>是否支持html数据。</td>
+            </tr>
+            <tr>
+                <td>pagerOpts</td>
+                <td>否</td>
+                <td>false|object</td>
+                <td>{}</td>
+                <td>
+                    分页配置
+                    <br>false:不需要分页导航
+                    <br>object:分页对象配置：{pageIndex:1, pageSize:25, appendTo:u, sizeSelect:[25, 50, 100, 150]}
+                    <div style="padding-left: 40px;">
+                        pageIndex:int。初始当前页
+                        <br>pageSzie:int。初始单页数据量
+                        <br>sizeSelect:Array。单页数据量选择器
+                        <br>appendTo:undefined|function。分页导航显示区域。undefined：显示到table之后；function：参数[table:datagrid表格jq对象]
+                    </div>
+                </td>
+            </tr>
+            <tr id="per_btn_configuration">
+                <td>operBtns</td>
+                <td>否</td>
+                <td>Array|object</td>
+                <td>[]</td>
+                <td>
+                    操作列按钮配置
+                    <br>Array:多个按钮配置
+                    <br>object:单个按钮配置
+                    <div style="padding-left: 40px;">
+                        txt:string。按钮文本
+                        <br>condition:boolean。按钮显示条件，用户添加权限控制。
+                        <br>handler:string。按钮事件处理名，使用插件<a href="#oper_handler">dgOper</a>方法来注册按钮事件
+                    </div>
+                </td>
+            </tr>
+            <tr id="oper_btn_tmpl">
+                <td>operBtnTmpl</td>
+                <td>否</td>
+                <td>string</td>
+                <td><xmp><a href='javascript:;'>{txt}</a></xmp></td>
+                <td>
+                    操作列按钮配置
+                    <br>Array:多个按钮配置
+                    <br>object:<a href="#per_btn_configuration">单个按钮配置</a>
+                    <div style="padding-left: 40px;">
+                        模板中使用{txt}形式的占位符来代表按钮配置中对应变量值
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>createOperBtn</td>
+                <td>否</td>
+                <td>function</td>
+                <td>undefined</td>
+                <td>
+                    自定义按钮创建方法，三个参数：td（当前按钮坐在单元格）、 data（当前按钮所在行的数据）、 <a href="#per_btn_configuration">operBtn</a>（当前按钮配置）
+                    <br>undefined:使用<a href="#oper_btn_tmpl">operBtnTmpl</a>模板进行创建按钮
+                    <br>function:返回类型必须为string|jquery，其中string类型表示按钮的html代码，jquery表示按钮对应的jq对象
+                </td>
+            </tr>
+            <tr>
+                <td>operTxt</td>
+                <td>否</td>
+                <td>string</td>
+                <td>操作</td>
+                <td>操作列表头文本</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    ############################################
+    <div class="panel panel-info" id="events">
+        <div class="panel-heading">事件说明</div>
+        <table class="table table-bordered table-striped table-hover table-condensed">
+            <thead>
+            <tr>
+                <th width="150">事件名</th>
+                <th width="25%">参数</th>
+                <th>参数说明</th>
+                <th>触发时机</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>initialize</td>
+                <td>e</td>
+                <td>
+                    e:事件对象
+                </td>
+                <td>在插件初始化完成后(调用完_init方法后)触发</td>
+            </tr>
+            <tr>
+                <td>destroy</td>
+                <td>e</td>
+                <td>
+                    e:事件对象
+                </td>
+                <td>在插件销毁时(调用完插件destroy方法后)触发</td>
+            </tr>
+            <tr>
+                <td>preload</td>
+                <td>e</td>
+                <td>
+                    e:事件对象
+                </td>
+                <td>在加载数据之前触发，如果改事件函数返回false，则停止加载数据。</td>
+            </tr>
+            <tr>
+                <td>success</td>
+                <td>e, response</td>
+                <td>
+                    e:事件对象
+                    <br>response:服务器响应数据
+                </td>
+                <td>在成功加载数据之后触发，如果改事件函数返回false，则需要在该事件函数中手动渲染数据。</td>
+            </tr>
+            <tr>
+                <td>createFieldTd</td>
+                <td>e, fieldName, fieldValue, item</td>
+                <td>
+                    e:事件对象
+                    <br>fieldName:当前单元格关联的字段名称
+                    <br>fieldValue:当前单元格关联的字段值，如果不存在该字段，则默认为空字符串""
+                    <br>item:单元格所在行的数据值
+                </td>
+                <td>
+                    <ul>
+                        <li>创建一个数据单元格之后触发</li>
+                        <li>支持返回html模板字符串，如<code>return "&lt;a href="./datagrid"&gt;{MerchantName}&lt;/a&gt;"</code>，模板中占位符将自动替换为单元格数据对应字段值</li>
+                        <li>支持返回jq对象</li>
+                        <li>若没有返回值，则使用插件默认的显示规则</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>createTd</td>
+                <td>e, columnType, fieldName, item</td>
+                <td>
+                    e:事件对象
+                    <br>columnType:列类型，即对应表头的data-column-type属性值
+                    <br>fieldName:数据列字段名，即对应表头的data-field-name属性值
+                    <br>item:单元格所在行的数据值
+                    <br>td:单元格对象
+                </td>
+                <td>创建一个单元格之后触发。</td>
+            </tr>
+            <tr>
+                <td>createTr</td>
+                <td>e, item</td>
+                <td>
+                    e:事件对象
+                    <br>item:单元格所在行的数据值
+                </td>
+                <td>创建一个数据表行之后触发。</td>
+            </tr>
+            <tr style="color: red;">
+                <td>expanding</td>
+                <td>e, item</td>
+                <td>
+                    e:事件对象
+                    <br>item:单元格所在行的数据值
+                </td>
+                <td>展开主表后触发。（暂不支持主子表）</td>
+            </tr>
+            <tr>
+                <td>shown</td>
+                <td>e, response</td>
+                <td>
+                    e:事件对象
+                    <br>response:服务器响应数据
+                </td>
+                <td>全部数据均显示之后触发</td>
+            </tr>
+            <tr>
+                <td>error</td>
+                <td>e</td>
+                <td>
+                    e:事件对象
+                </td>
+                <td>ajax请求出错后触发</td>
+            </tr>
+            <tr>
+                <td>complete</td>
+                <td>e</td>
+                <td>
+                    e:事件对象
+                </td>
+                <td>ajax请求完成后触发，包括请求成功和请求失败。</td>
+            </tr>
+            <tr>
+                <td>timeout</td>
+                <td>e</td>
+                <td>
+                    e:事件对象
+                </td>
+                <td>ajax请求时间超过了<a href="#timeout_configuration">timeout</a>配置项时间后触发。</td>
+            </tr>
+            <tr>
+                <td>preShow</td>
+                <td>e, data</td>
+                <td>e:事件对象
+                    <br>data:待显示数据
+                </td>
+                <td>显示数据前触发，如果返回false，则插件不会显示数据。用于自定义显示数据方法。</td>
+            </tr>
+            <tr>
+                <td>preReload</td>
+                <td>e</td>
+                <td>e:事件对象</td>
+                <td>调用reload方法前触发，如果该方法返回false，则reload方法不会执行。可用于自定义分页事件</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    ############################################
+    <div class="panel panel-info" id="methods">
+        <div class="panel-heading">方法说明</div>
+        <table class="table table-bordered table-striped table-hover table-condensed">
+            <thead>
+            <tr>
+                <th width="100">方法名</th>
+                <th width="20%">参数</th>
+                <th>参数说明</th>
+                <th>方法说明</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>proto</td>
+                <td></td>
+                <td></td>
+                <td>获取插件对象，返回DataGrid对象</td>
+            </tr>
+            <tr>
+                <td>load</td>
+                <td>data</td>
+                <td>data：object，可选，默认undefined。加载数据时的即时参数，优先级最低</td>
+                <td>加载表格数据，返回table对应的jq对象</td>
+            </tr>
+            <tr>
+                <td>reload</td>
+                <td></td>
+                <td></td>
+                <td>刷新表格数据，返回table对应的jq对象</td>
+            </tr>
+            <tr>
+                <td>getSelected</td>
+                <td>thIndex, allField</td>
+                <td>
+                    thIndex：number，可选，默认为u。当表格中存在多个可选列时，手动指定目标列索引；若目标列不是可选列，则获取第一个可选列选中项
+                    allField：boolean，可选，默认false。当要获取选中数据的所有字段时，可以设置为true
+                </td>
+                <td>
+                    获取选中行的数据或选中数据的主键值。
+                    <br>如果目标列为多选列则返回数组，没有选中数据行时返回空数组；
+                    <br>如果目标列为单选列则返回数据或数据主键值，没有选中数据行时返回undefined
+                </td>
+            </tr>
+            <tr>
+                <td>destroy</td>
+                <td></td>
+                <td></td>
+                <td>销毁插件，返回table对应的jq对象</td>
+            </tr>
+            <tr id="showData_prepend">
+                <td>showData <span class="label label-warning">Extention</span></td>
+                <td>data, single, prepend</td>
+                <td>
+                    data：Array|object，必须。Array：要追加显示的数据列表；object：要显示的分页对象
+                    <br>single：boolean，可选，默认false。是否根据主键对追加数据进行去重
+                    <br>prepend：boolean，可选，默认false。true表示在表格第一行添加数据
+                </td>
+                <td>追加显示指定数据，返回table对应的jq对象</td>
+            </tr>
+            <tr>
+                <td>getSearchFormData</td>
+                <td></td>
+                <td></td>
+                <td>获取查询区域参数，返回object对象</td>
+            </tr>
+            <tr>
+                <td>clearSearchForm</td>
+                <td>clearHidden</td>
+                <td>clearHidden：boolean，可选，默认false。是否清空隐藏表单元素</td>
+                <td>清空查询条件区域</td>
+            </tr>
+            <tr>
+                <td>getPageParameter</td>
+                <td></td>
+                <td></td>
+                <td>获取分页参数，返回object对象</td>
+            </tr>
+            <tr>
+                <td>clearData</td>
+                <td>clearPager</td>
+                <td>clearPager: boolean，可选，默认false。是否清空分页参数</td>
+                <td>清空表格数据</td>
+            </tr>
+            <tr>
+                <td>message</td>
+                <td>msg, color</td>
+                <td>
+                    msg: string，可选，默认undefined。要显示的提示消息文本
+                    <br>color：string，可选，默认灰色#777。消息文本颜色
+                    <br>不传参数表示隐藏消息提示
+                </td>
+                <td>利用表行提示消息</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+############################################
+    <div class="panel panel-info" id="server_response">
+        <div class="panel-heading">服务端响应</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-warning">响应数据类型</li>
+                <li class="list-group-item">
+                    <h5 class="list-group-item-heading">支持mx.common.util.lang.AjaxPageResult分页对象</h5>
+                    <p class="list-group-item-text">PageResult类型转换：new AjaxPageResult(pageResult)</p>
+                </li>
+                <li class="list-group-item">支持List数据列表</li>
+                <li class="list-group-item">支持jsonp响应</li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-warning">枚举使用说明</li>
+                <li class="list-group-item">
+                    <h5 class="list-group-item-heading">对于返回数据中包含了枚举值数据的，需要调用View的.addEnum()方法将该枚举类转为JS变量</h5>
+                    <p class=list-group-item-text>eg: <code>return new View("datagrid/list").addEnum(PromoTemplateType.class, true)</code></p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+############################################
+    <div class="panel panel-info" id="datagridPicker">
+        <div class="panel-heading">Picker支持</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-warning">示例：</li>
+                <li class="list-group-item">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <a for-datagrid-picker="#picker" class="btn btn-sm btn-primary">选择</a>
+                            <div class="row form-group form-group-sm" id="formdata">
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">影院名称：</span>
+                                        <input name="storeName" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <a class="btn btn-primary btn-sm" for-datagrid="load"><span class="glyphicon glyphicon-search"></span> 查询</a>
+                                    <a class="btn btn-default btn-sm" for-datagrid="clearSearchForm"><span class="glyphicon glyphicon-repeat"></span> 清空</a>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped table-hover table-condensed" id="picker"
+                               data-source="datagrid/test"
+                               data-data-type="jsonp"
+                               data-search-form="#formdata"
+                               data-primary-key="Id"
+                               data-selectable="true"
+                               data-jsonp-callback="callback"
+                               role="datagridPicker">
+                            <tr>
+                                <th data-column-type="checkbox"></th>
+                                <th data-column-type="index"></th>
+                                <th data-field-name="MerchanName">text</th>
+                                <th data-field-name="localDate" data-field-type="Date">localDate</th>
+                                <th data-field-name="localDateTime" data-field-type="Date">localDateTime</th>
+                                <th data-field-name="date" data-field-type="Date[YYYY-MM-DD hh:mm]">Date</th>
+                                <th data-field-name="enumValue" data-field-type="Enum[PromoTemplateType]">EnumValue</th>
+                                <th data-field-name="enumName" data-field-type="EnumName[PromoTemplateType]">EnumName</th>
+                                <th data-column-type="oper" data-oper-btns="[{txt:'查看',condition:true,handler:'detail'}]"></th>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                </li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-warning">使用说明：</li>
+                <li class="list-group-item">1. HTML规范同datagrid，配置项同datagrid</li>
+                <li class="list-group-item">2. 使用Picker功能后，页面中的datagrid及其searchForm会以Modal形式展示</li>
+                <li class="list-group-item">3. 页面中原有的datagrid强制不使用分页，并且searchForm区域将被隐藏</li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-warning">Picker初始化：</li>
+                <li class="list-group-item">
+                    <h5 class="list-group-item-heading">1. 手动：$("table").datagridPicker(); </h5>
+                    <p class="list-group-item-text">初始化配置参数见<a href="#configuration">datagrid配置</a></p>
+                    <h5 class="list-group-item-heading">扩展配置项：</h5>
+                    <p class="list-group-item-text">
+                        canSel：boolean，可选，默认false；若为true则表示选定表格中不需要checkbox和radio列，picker将会自动删除该列，反之则不会删除checkbox和radio列
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <h5 class="list-group-item-heading">2. 自动：属性role=datagridPicker</h5>
+                    <p class="list-group-item-text">
+                        <xmp><table role="datagridPicker"></table></xmp>
+                    </p>
+                    <h5 class="list-group-item-heading">将picker绑定至按钮单击事件上</h5>
+                    <p class="list-group-item-text">
+                        <xmp><button for-datagrid-picker="#tableId">选择</button></xmp>
+                    </p>
+                </li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-warning">Picker方法：</li>
+                <li class="list-group-item">
+                    <h5 class="list-group-item-heading">1. open：打开Modal框；</h5>
+                    <p class="list-group-item-text">eg：$("table").datagridPicker("open")</p>
+                </li>
+                <li class="list-group-item">
+                    <h5 class="list-group-item-heading">2. close：关闭Modal框；</h5>
+                    <p class="list-group-item-text">eg：$("table").datagridPicker("close")</p>
+                </li>
+                <li class="list-group-item">
+                    <h5 class="list-group-item-heading">3. destroy：销毁picker及datagrid；</h5>
+                    <p class="list-group-item-text">eg：$("table").datagridPicker("destroy")</p>
+                </li>
+                <li class="list-group-item">
+                    <h5 class="list-group-item-heading">4. get：获取Picker选定的数据；</h5>
+                    <p class="list-group-item-text">
+                        该方法有一个参数，allField：boolean，可选，默认false，若为true则获取每条数组所有字段信息，否则值获取每条数据的主键字段值。
+                        <br>eg：var selected = $("table").datagridPicker("get", true)   // 获取对象数组
+                        <br>eg：var selected = $("table").datagridPicker("get")   // 获取id数组
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+#setCss(
+    "/mtime/datagrid/css/datagrid.css"
+)
+
+#setJs(
+    "/lib/moment/moment-with-locales.js",
+    "/mtime/datagrid/js/datagrid.js",
+    "/js/view/datagrid/demo.js"
+)
+
+

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="../../../lib/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="../css/datagrid.css">
+
+</head>
+<body>
+
+    <button id="selectBtn">获取选中行</button>
+
+    <div class="container" style="margin-top: 10px;">
+        <div id="formdata">
+            <label>名称</label>
+            <input name="name" value="111" class="form-control">
+            <input name="name1" value="111" class="form-control">
+            <input name="haha" value="111" class="form-control">
+            <input type="hidden" name="hide" value="111" class="form-control">
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading"></div>
+            <table class="table table-bordered table-striped table-hover table-condensed" id="datagrid"
+                   data-source="data.json"
+                   data-multi-sort="true"
+                   data-data-type="jsonp"
+                   data-primary-key="Id"
+                   data-selectable="true"
+                   data-jsonp-callback="callback"
+                   >
+                <tr>
+                    <th data-column-type="checkbox"></th>
+                    <th data-column-type="radio"></th>
+                    <th data-column-type="index"></th>
+                    <th data-extra-data="true" data-field-name="MerchanName" data-sort="">text</th>
+                    <th data-field-name="localDate" data-field-type="Date" data-sort="asc">localDate</th>
+                    <th data-field-name="localDateTime" data-field-type="Date" data-sort="desc 2">localDateTime</th>
+                    <th data-field-name="date" data-field-type="Date[YYYY-MM-DD hh:mm]" data-sort="asc 1">Date</th>
+                    <th data-field-name="enumValue" data-field-type="Enum[PromoTemplateType]">EnumValue</th>
+                    <th data-field-name="enumName" data-field-type="EnumName[PromoTemplateType]">EnumName</th>
+                    <th data-column-type="oper" data-oper-btns="[{txt:'查看',condition:'this.enumValue==3',handler:'detail'},{txt:'查看',condition:true,handler:'detail'}]"></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="../../../lib/jquery/jquery.min.js"></script>
+    <script src="../../../lib/bootstrap/js/bootstrap.js"></script>
+    <!-- 时间格式化时需要用到 -->
+    <script src="../../../lib/moment/moment-with-locales.js"></script>
+    <script src="../js/datagrid.js"></script>
+    <script>
+
+        // 静态数据
+        var s = [{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团026","enumValue":3,"MerchanName":"北京万达影视026","CreateTime":1465271128210,"localDate":"2016-06-07","Id":26,"enumName":"STRATEGY","Name":"UME国际影城026"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团027","enumValue":1,"MerchanName":"北京万达影视027","CreateTime":1465271128211,"localDate":"2016-06-07","Id":27,"enumName":"UNKNOWN","Name":"UME国际影城027"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团028","enumValue":2,"MerchanName":"北京万达影视028","CreateTime":1465271128211,"localDate":"2016-06-07","Id":28,"enumName":"COUPON","Name":"UME国际影城028"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团029","enumValue":3,"MerchanName":"北京万达影视029","CreateTime":1465271128211,"localDate":"2016-06-07","Id":29,"enumName":"STRATEGY","Name":"UME国际影城029"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团030","enumValue":1,"MerchanName":"北京万达影视030","CreateTime":1465271128211,"localDate":"2016-06-07","Id":30,"enumName":"UNKNOWN","Name":"UME国际影城030"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团031","enumValue":2,"MerchanName":"北京万达影视031","CreateTime":1465271128211,"localDate":"2016-06-07","Id":31,"enumName":"COUPON","Name":"UME国际影城031"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团032","enumValue":3,"MerchanName":"北京万达影视032","CreateTime":1465271128211,"localDate":"2016-06-07","Id":32,"enumName":"STRATEGY","Name":"UME国际影城032"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团033","enumValue":1,"MerchanName":"北京万达影视033","CreateTime":1465271128211,"localDate":"2016-06-07","Id":33,"enumName":"UNKNOWN","Name":"UME国际影城033"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团034","enumValue":2,"MerchanName":"北京万达影视034","CreateTime":1465271128211,"localDate":"2016-06-07","Id":34,"enumName":"COUPON","Name":"UME国际影城034"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团035","enumValue":3,"MerchanName":"北京万达影视035","CreateTime":1465271128211,"localDate":"2016-06-07","Id":35,"enumName":"STRATEGY","Name":"UME国际影城035"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团036","enumValue":1,"MerchanName":"北京万达影视036","CreateTime":1465271128211,"localDate":"2016-06-07","Id":36,"enumName":"UNKNOWN","Name":"UME国际影城036"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团037","enumValue":2,"MerchanName":"北京万达影视037","CreateTime":1465271128211,"localDate":"2016-06-07","Id":37,"enumName":"COUPON","Name":"UME国际影城037"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团038","enumValue":3,"MerchanName":"北京万达影视038","CreateTime":1465271128212,"localDate":"2016-06-07","Id":38,"enumName":"STRATEGY","Name":"UME国际影城038"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团039","enumValue":1,"MerchanName":"北京万达影视039","CreateTime":1465271128212,"localDate":"2016-06-07","Id":39,"enumName":"UNKNOWN","Name":"UME国际影城039"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团040","enumValue":2,"MerchanName":"北京万达影视040","CreateTime":1465271128212,"localDate":"2016-06-07","Id":40,"enumName":"COUPON","Name":"UME国际影城040"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团041","enumValue":3,"MerchanName":"北京万达影视041","CreateTime":1465271128212,"localDate":"2016-06-07","Id":41,"enumName":"STRATEGY","Name":"UME国际影城041"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团042","enumValue":1,"MerchanName":"北京万达影视042","CreateTime":1465271128212,"localDate":"2016-06-07","Id":42,"enumName":"UNKNOWN","Name":"UME国际影城042"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团043","enumValue":2,"MerchanName":"北京万达影视043","CreateTime":1465271128212,"localDate":"2016-06-07","Id":43,"enumName":"COUPON","Name":"UME国际影城043"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团044","enumValue":3,"MerchanName":"北京万达影视044","CreateTime":1465271128212,"localDate":"2016-06-07","Id":44,"enumName":"STRATEGY","Name":"UME国际影城044"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团045","enumValue":1,"MerchanName":"北京万达影视045","CreateTime":1465271128212,"localDate":"2016-06-07","Id":45,"enumName":"UNKNOWN","Name":"UME国际影城045"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团046","enumValue":2,"MerchanName":"北京万达影视046","CreateTime":1465271128212,"localDate":"2016-06-07","Id":46,"enumName":"COUPON","Name":"UME国际影城046"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团047","enumValue":3,"MerchanName":"北京万达影视047","CreateTime":1465271128212,"localDate":"2016-06-07","Id":47,"enumName":"STRATEGY","Name":"UME国际影城047"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团048","enumValue":1,"MerchanName":"北京万达影视048","CreateTime":1465271128212,"localDate":"2016-06-07","Id":48,"enumName":"UNKNOWN","Name":"UME国际影城048"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团049","enumValue":2,"MerchanName":"北京万达影视049","CreateTime":1465271128212,"localDate":"2016-06-07","Id":49,"enumName":"COUPON","Name":"UME国际影城049"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团050","enumValue":3,"MerchanName":"北京万达影视050","CreateTime":1465271128212,"localDate":"2016-06-07","Id":50,"enumName":"STRATEGY","Name":"UME国际影城050"}]
+
+        var PromoTemplateType = {"1":"优惠券模板","2":"促销模板","COUPON":1,"STRATEGY":2,"values":[{"displayName":"优惠券模板","name":"COUPON","text":"优惠券模板","value":1},{"displayName":"促销模板","name":"STRATEGY","text":"促销模板","value":2}]};
+        $("#datagrid").dgBind("initialize", function(e, datagrid) {
+            console.log(arguments)
+        }).dgFieldTd("MerchanName", function() {
+            return "<a>{MerchanName}</a>"
+//        }).dgCreateFieldTd("MerchanName", function(e, dg, ) {
+//            console.log(arguments)
+        }).dgOper("detail", function(e, data) {
+            console.log(arguments)
+//        }).datagrid({
+//            source: [{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团026","enumValue":3,"MerchanName":"北京万达影视026","CreateTime":1465271128210,"localDate":"2016-06-07","Id":26,"enumName":"STRATEGY","Name":"UME国际影城026"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团027","enumValue":1,"MerchanName":"北京万达影视027","CreateTime":1465271128211,"localDate":"2016-06-07","Id":27,"enumName":"UNKNOWN","Name":"UME国际影城027"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团028","enumValue":2,"MerchanName":"北京万达影视028","CreateTime":1465271128211,"localDate":"2016-06-07","Id":28,"enumName":"COUPON","Name":"UME国际影城028"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团029","enumValue":3,"MerchanName":"北京万达影视029","CreateTime":1465271128211,"localDate":"2016-06-07","Id":29,"enumName":"STRATEGY","Name":"UME国际影城029"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团030","enumValue":1,"MerchanName":"北京万达影视030","CreateTime":1465271128211,"localDate":"2016-06-07","Id":30,"enumName":"UNKNOWN","Name":"UME国际影城030"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团031","enumValue":2,"MerchanName":"北京万达影视031","CreateTime":1465271128211,"localDate":"2016-06-07","Id":31,"enumName":"COUPON","Name":"UME国际影城031"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团032","enumValue":3,"MerchanName":"北京万达影视032","CreateTime":1465271128211,"localDate":"2016-06-07","Id":32,"enumName":"STRATEGY","Name":"UME国际影城032"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团033","enumValue":1,"MerchanName":"北京万达影视033","CreateTime":1465271128211,"localDate":"2016-06-07","Id":33,"enumName":"UNKNOWN","Name":"UME国际影城033"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团034","enumValue":2,"MerchanName":"北京万达影视034","CreateTime":1465271128211,"localDate":"2016-06-07","Id":34,"enumName":"COUPON","Name":"UME国际影城034"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团035","enumValue":3,"MerchanName":"北京万达影视035","CreateTime":1465271128211,"localDate":"2016-06-07","Id":35,"enumName":"STRATEGY","Name":"UME国际影城035"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团036","enumValue":1,"MerchanName":"北京万达影视036","CreateTime":1465271128211,"localDate":"2016-06-07","Id":36,"enumName":"UNKNOWN","Name":"UME国际影城036"},{"localDateTime":"2016-06-07T11:45:28.211","date":1465271128211,"CompanyName":"北京万达集团037","enumValue":2,"MerchanName":"北京万达影视037","CreateTime":1465271128211,"localDate":"2016-06-07","Id":37,"enumName":"COUPON","Name":"UME国际影城037"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团038","enumValue":3,"MerchanName":"北京万达影视038","CreateTime":1465271128212,"localDate":"2016-06-07","Id":38,"enumName":"STRATEGY","Name":"UME国际影城038"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团039","enumValue":1,"MerchanName":"北京万达影视039","CreateTime":1465271128212,"localDate":"2016-06-07","Id":39,"enumName":"UNKNOWN","Name":"UME国际影城039"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团040","enumValue":2,"MerchanName":"北京万达影视040","CreateTime":1465271128212,"localDate":"2016-06-07","Id":40,"enumName":"COUPON","Name":"UME国际影城040"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团041","enumValue":3,"MerchanName":"北京万达影视041","CreateTime":1465271128212,"localDate":"2016-06-07","Id":41,"enumName":"STRATEGY","Name":"UME国际影城041"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团042","enumValue":1,"MerchanName":"北京万达影视042","CreateTime":1465271128212,"localDate":"2016-06-07","Id":42,"enumName":"UNKNOWN","Name":"UME国际影城042"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团043","enumValue":2,"MerchanName":"北京万达影视043","CreateTime":1465271128212,"localDate":"2016-06-07","Id":43,"enumName":"COUPON","Name":"UME国际影城043"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团044","enumValue":3,"MerchanName":"北京万达影视044","CreateTime":1465271128212,"localDate":"2016-06-07","Id":44,"enumName":"STRATEGY","Name":"UME国际影城044"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团045","enumValue":1,"MerchanName":"北京万达影视045","CreateTime":1465271128212,"localDate":"2016-06-07","Id":45,"enumName":"UNKNOWN","Name":"UME国际影城045"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团046","enumValue":2,"MerchanName":"北京万达影视046","CreateTime":1465271128212,"localDate":"2016-06-07","Id":46,"enumName":"COUPON","Name":"UME国际影城046"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团047","enumValue":3,"MerchanName":"北京万达影视047","CreateTime":1465271128212,"localDate":"2016-06-07","Id":47,"enumName":"STRATEGY","Name":"UME国际影城047"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团048","enumValue":1,"MerchanName":"北京万达影视048","CreateTime":1465271128212,"localDate":"2016-06-07","Id":48,"enumName":"UNKNOWN","Name":"UME国际影城048"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团049","enumValue":2,"MerchanName":"北京万达影视049","CreateTime":1465271128212,"localDate":"2016-06-07","Id":49,"enumName":"COUPON","Name":"UME国际影城049"},{"localDateTime":"2016-06-07T11:45:28.212","date":1465271128212,"CompanyName":"北京万达集团050","enumValue":3,"MerchanName":"北京万达影视050","CreateTime":1465271128212,"localDate":"2016-06-07","Id":50,"enumName":"STRATEGY","Name":"UME国际影城050"}],
+////            source: "./data.json",
+////            source: "http://localhost:8080/jsunw/player/api/test",
+////            childFields: ["Id"],
+//            dataType: "jsonp",
+//            searchForm: "#formdata",
+//            jsonpCallback: "callback",
+//            primaryKey: "Id",
+//            selectable: true,
+//            timeout: 5000,
+//            pagerOpts: {
+////                pageIndex: 2,
+////                pageSize: 5
+//            }
+        }).datagrid({
+            pagerOpts: {
+                appendTo: function(element, table) {
+                    var ele = element.clone();
+                    ele.insertAfter(table)
+                    this.element = element.insertAfter(table)
+                            .add(ele)
+                }
+            }
+        })
+
+
+        // 获取选中行ids
+        $("#selectBtn").click(function() {
+            var sel = $("#datagrid").datagrid("getSelected", true)
+            console.log(sel)
+        })
+
+
+
+    </script>
+</body>
+</html>

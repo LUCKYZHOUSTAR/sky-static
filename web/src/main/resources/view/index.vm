@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    #parse("layout/header.vm")
+<body>
+
+<div id="wrapper">
+    #parse("layout/nav.vm")
+
+
+    <div role="navigation" class="navbar-default sidebar" style="position: fixed; margin-top: 0px">
+        <div class="sidebar-nav navbar-collapse">
+            <ul id="side-menu" class="nav">
+                <li>
+                    <a href="#mtime">后台样式</a>
+                    <a href="/datagrid"><span class="glyphicon glyphicon-star"></span> DataGrid表格</a>
+                    <a href="/selectable"><span class="glyphicon glyphicon-star"></span> 下拉组件</a>
+                    <a href="/multiselectable"><span class="glyphicon glyphicon-star"></span> 多选下拉</a>
+                    <a href="/dp"><span class="glyphicon glyphicon-star"></span> 时间控件</a>
+                    <a href="/fi"><span class="glyphicon glyphicon-star"></span> 文件上传</a>
+                    <a href="/tree"><span class="glyphicon glyphicon-star"></span> 树插件</a>
+                    <a href="/ac"><span class="glyphicon glyphicon-star"></span> 自动完成</a>
+                    <a href="/mtime/require"><span class="glyphicon glyphicon-star"></span> Require</a>
+                    <a href="#jquery">jQuery</a>
+                    <a href="#bootstrap">Bootstrap</a>
+                    <a href="#moment">时间处理</a>
+                    <a href="#validation">表单验证</a>
+                    <a href="#lobibox">浮层提示</a>
+                    <a href="#selectable">下拉控件</a>
+                    <a href="#gantt">甘特图</a>
+                    <a href="#jquery-json">JSON</a>
+                    <a href="#highcharts">图表</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="page-wrapper">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>Home</li>
+            </ol>
+        </div>
+
+        <div id="mtime" class="panel panel-info">
+            <div class="panel-heading">万达总部系统样式文件</div>
+            <div class="panel-body">
+                <div class="well">
+                    <xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/css/wanda.css" />
+<script type="text/javascript" src="${staticSiteUrl}/js/main.js" >
+<script type="text/javascript" src="${staticSiteUrl}/js/cmc.ext.js" ></script></xmp>
+                </div>
+
+                <a href="http://gitlab.mx.com/pc/wandasystem" target="_blank">最新Demo样式</a>
+            </div>
+        </div>
+
+##        <div id="mtime_tree" class="panel panel-info">
+##            <div class="panel-heading">树插件</div>
+##            <div class="panel-body">
+##                <div class="well">
+##                    <xmp><script type="text/javascript" src="${staticSiteUrl}/mtime/tree/listdom.js" ></script></xmp>
+##                </div>
+##            </div>
+##        </div>
+
+        <div id="jquery" class="panel panel-info">
+            <div class="panel-heading">jQuery</div>
+            <div class="panel-body">
+                <div class="well">
+                    <xmp><script type="text/javascript" src="${staticSiteUrl}/lib/jquery/jquery.min.js"></script></xmp>
+                </div>
+
+                <a href="http://jquery.dullsky.cc/" target="_blank">查看API</a>
+            </div>
+        </div>
+
+        <div id="bootstrap" class="panel panel-info">
+            <div class="panel-heading">Bootstrap</div>
+            <div class="panel-body">
+                <div class="well">
+                    <xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/lib/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="${staticSiteUrl}/lib/bootstrap/js/bootstrap.min.js"></script></xmp>
+                </div>
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#bootstrap-theme" role="tab" data-toggle="tab">Bootstrap Theme</a></li>
+                    <li role="presentation"><a href="#bootstrap-html5" role="tab" data-toggle="tab">Html for IE9</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="bootstrap-theme">
+                        <div class="bs-callout bs-callout-warning" id="callout-navbar-overflow">
+                            <h4>Bootstrap Theme:</h4>
+                            <p>这是bootstrap的主题文件, 使用默认主题时可以不用引入</p>
+                            <p>
+                            <div class="well">
+                                <xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/lib/bootstrap/css/bootstrap-theme.min.css" /></xmp>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="bootstrap-html5">
+                        <div class="bs-callout bs-callout-warning" id="callout-navbar-overflow">
+                            <h4>Html for IE9: </h4>
+                            <p>为了让HTML5在较低版本的IE浏览器中体验更好, 请引用以下代码:</p>
+                            <p>
+                            <div class="well">
+                                <xmp><!--[if lt IE 9]>
+<script type="text/javascript" src="${staticSiteUrl}/lib/bootstrap/js/html5shiv.min.js"></script>
+<script type="text/javascript" src="${staticSiteUrl}/lib/bootstrap/js/respond.min.js"></script>
+<![endif]--></xmp>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="http://v3.bootcss.com/css/" target="_blank">查看Demo</a>
+            </div>
+        </div>
+
+
+        <div id="moment" class="panel panel-info">
+            <div class="panel-heading">时间处理 - moment</div>
+            <div class="panel-body">
+                <div class="well">
+                    <xmp><script type="text/javascript" src="${staticSiteUrl}/lib/moment/moment-with-locales.js"></script></xmp>
+                </div>
+
+                <a href="http://momentjs.cn/docs/" target="_blank">查看API</a>
+            </div>
+        </div>
+
+
+        <div id="validation" class="panel panel-info">
+            <div class="panel-heading">表单验证插件 - jQuery.validate</div>
+            <div class="panel-body">
+                <div class="well">
+                    <xmp><script type="text/javascript" src="${staticSiteUrl}/lib/validate/jquery.validate.min.js"></script></xmp>
+                </div>
+
+                <a href="https://jqueryvalidation.org/files/demo/" target="_blank">查看Demo</a>
+            </div>
+        </div>
+
+
+        <div id="lobibox" class="panel panel-info">
+            <div class="panel-heading">浮层提示 - Lobibox</div>
+            <div class="panel-body">
+                <div class="well">
+                    <xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/lib/lobibox/css/lobibox.css">
+<script type="text/javascript" src="${staticSiteUrl}/lib/lobibox/js/lobibox.js"></script></xmp>
+                </div>
+
+                <div class="alert alert-success">如果不需要使用所有功能, 可以通过以下url引入部分功能: </div>
+
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#lobibox-notify" role="tab" data-toggle="tab">Lobibox.notify</a></li>
+                    <li role="presentation"><a href="#lobibox-message" role="tab" data-toggle="tab">Lobibox Messagebox</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="lobibox-notify">
+                        <div class="bs-callout bs-callout-warning" id="callout-navbar-overflow">
+                            <h4>Lobibox.notify:</h4>
+                            <p>
+                            <div class="well">
+                                <xmp><script type="text/javascript" src="${staticSiteUrl}/lib/lobibox/js/notifications.js"></script></xmp>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="lobibox-message">
+                        <div class="bs-callout bs-callout-warning" id="callout-navbar-overflow">
+                            <h4>Lobibox Messagebox: </h4>
+                            <p>
+                            <div class="well">
+                                <xmp><script type="text/javascript" src="${staticSiteUrl}/lib/lobibox/js/messageboxes.js"></script></xmp>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="http://www.jq22.com/yanshi6604" target="_blank">查看Demo</a>
+            </div>
+        </div>
+
+        <div id="selectable" class="panel panel-info">
+            <div class="panel-heading">下拉控件</div>
+            <div class="panel-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#select2" role="tab" data-toggle="tab">select2</a></li>
+                    <li role="presentation"><a href="#multiselect" role="tab" data-toggle="tab">jquery.ui.multiselect</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="select2">
+                        <div class="bs-callout bs-callout-warning" id="callout-navbar-overflow">
+                            <h4>select2: </h4>
+                            <p>
+                            <div class="well">
+                                <xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/lib/select2/css/select2.min.css" />
+<script type="text/javascript" src="${staticSiteUrl}/lib/select2/js/select2.min.js"></script></xmp>
+                            </div>
+                            </p>
+
+                            <a href="http://select2.github.io/examples.html" target="_blank">查看Demo</a>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="multiselect">
+                        <div class="bs-callout bs-callout-warning" id="callout-navbar-overflow">
+                            <h4>jquery.ui.multiselect: </h4>
+                            <p>
+                            <div class="well">
+                                <xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/lib/jquery.ui/css/jquery-ui.css" />
+<link type="text/css" rel="stylesheet" href="${staticSiteUrl}/lib/jquery.ui/multiselect/css/jquery.multiselect.css" />
+<script type="text/javascript" src="${staticSiteUrl}/lib/jquery.ui/js/jquery-ui.min.js">
+<script type="text/javascript" src="${staticSiteUrl}/lib/jquery.ui/multiselect/js/jquery.multiselect.min.js"></script>
+<script type="text/javascript" src="${staticSiteUrl}/lib/jquery.ui/multiselect/i18n/jquery.multiselect.zh-cn.js"></script></xmp>
+                            </div>
+                            </p>
+
+                            <a href="https://github.com/ehynds/jquery-ui-multiselect-widget" target="_blank">查看文档</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="gantt" class="panel panel-info">
+            <div class="panel-heading">甘特图 - jQuery.Gantt</div>
+            <div class="panel-body">
+                <div class="well">
+                    <xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/lib/gantt/style.css" />
+<link type="text/css" rel="stylesheet" href="${staticSiteUrl}/lib/gantt/prettify.css" />
+<script type="text/javascript" src="${staticSiteUrl}/lib/gantt/jquery.fn.gantt.js"></script>
+<script type="text/javascript" src="${staticSiteUrl}/lib/gantt/prettify.js"></script></xmp>
+                </div>
+
+                <a href="http://taitems.github.io/jQuery.Gantt/" target="_blank">查看Demo</a>
+            </div>
+
+        </div>
+
+
+        <div id="jquery-json" class="panel panel-info">
+            <div class="panel-heading">JSON - jQuery.json</div>
+            <div class="panel-body">
+                <div class="well">
+                    <xmp><script type="text/javascript" src="${staticSiteUrl}/lib/json/jquery-json.js"></script></xmp>
+                </div>
+
+                <a href="https://github.com/Krinkle/jquery-json" target="_blank">查看Demo</a>
+            </div>
+
+        </div>
+
+
+
+        <div id="highcharts" class="panel panel-info">
+            <div class="panel-heading">图表 - highcharts</div>
+            <div class="panel-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#highcharts-base" role="tab" data-toggle="tab">HIGHCHARTS</a></li>
+                    <li role="presentation"><a href="#highcharts-map" role="tab" data-toggle="tab">HIGHMAPS</a></li>
+                    <li role="presentation"><a href="#highcharts-stock" role="tab" data-toggle="tab">HIGHSTOCK</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="highcharts-base">
+                        <div class="bs-callout bs-callout-warning" id="callout-navbar-overflow">
+                            <h4>HIGHCHARTS: </h4>
+                            <div class="alert alert-success">Highcharts是纯JavaScript编写的图表库,提供了直观的、交互式图表,您的web站点或web应用程序。Highcharts目前支持线,花键、面积、areaspline、柱、栏、馅饼和散射图表类型。</div>
+                            <p>
+                            <div class="well">
+                                <xmp><script type="text/javascript" src="${staticSiteUrl}/lib/highcharts/highcharts.js"></script></xmp>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="highcharts-map">
+                        <div class="bs-callout bs-callout-warning" id="callout-navbar-overflow">
+                            <h4>HIGHMAPS: </h4>
+                            <div class="alert alert-success">Highmaps 是一款基于 HTML5 的优秀地图组件,可以方便快捷的创建用于展现销售、选举结果等其他与地理位置关系密切的交互性地图图表。</div>
+                            <p>
+                            <div class="well">
+                                <xmp><script type="text/javascript" src="${staticSiteUrl}/lib/highcharts/highmaps.js"></script></xmp>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="highcharts-stock">
+                        <div class="bs-callout bs-callout-warning" id="callout-navbar-overflow">
+                            <h4>HIGHSTOCK: </h4>
+                            <div class="alert alert-success">Highstock允许您创建股票或一般的时间表图表在纯JavaScript,包括复杂的导航选项就像一个小导航仪系列,预定日期范围、日期选择器、滚动和淘金。</div>
+                            <p>
+                            <div class="well">
+                                <xmp><script type="text/javascript" src="${staticSiteUrl}/lib/highcharts/highstock.js"></script></xmp>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="http://www.hcharts.cn/demo/highcharts" target="_blank">查看Demo</a>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <footer class="footer">
+        <div class="text-center">© 2015 Mtime, Inc.</div>
+    </footer>
+</div>
+</body>
+
+</html>
+
+
+
+#set($layout = "view/layout/empty.vm")
+
+#setCss("/lib/bootstrap/css/docs.min.css")
+

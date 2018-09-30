@@ -1,0 +1,64 @@
+#parse("layout/header.vm")
+
+<div role="navigation" class="navbar-default sidebar" style="position: fixed; margin-top: 0px">
+    <div class="sidebar-nav navbar-collapse">
+        <ul id="side-menu" class="nav">
+        </ul>
+    </div>
+</div>
+
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">tree</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <h1>[树组件说明]</h1>
+            <h3 id="dependencies">脚本引入</h3>
+
+            <pre><code><xmp><script type="text/javascript" src="${staticSiteUrl}/mtime/tree/listdom.js" ></script></xmp></code></pre>
+
+
+
+            <p>列表树展开<p>
+            <h3>调用说明:</h3>
+<pre>
+    $("#list").TreeList({<br>
+        treedata:{"items": [{"id": "3",name:"test"}]，classCount：3},<br>
+        type:1,<br>
+        showtree:true,<br>
+        classname:'treedom',<br>
+        singleClick: function(data) {<br>
+          console.log(data);<br>
+          //这里可以通过data获得相应数值<br>
+        },   <br>
+        doubleClick:function() {  <br>
+        }//双击事件<br>
+    });<br>
+</pre>
+
+            <h3> 参数说明：</h3>
+<pre>
+    treedata: json数据<br>
+    type:1, 类型1为树形跳转，类型2为树形选择框，类型3为下拉 ，4为每级可跳转<br>
+    classname:'treedom',区别各个菜单中的事件名字<br>
+    showtree:是否直接显示树形结构<br>
+</pre>
+            <h3>返回值：</h3>
+<pre>
+{<br>
+    id:tree_1,  点击的项的编号<br>
+    name:test， 点击的项的内容<br>
+    show: true 显示还是隐藏（弹出菜单此项无用）<br>
+    checked:true input选中还是未选中<br>
+    以及其他原始节点数据
+}<br>
+</pre>
+        </div>
+    </div>
+</div>

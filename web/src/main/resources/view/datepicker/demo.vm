@@ -1,0 +1,337 @@
+#parse("layout/header.vm")
+
+<div role="navigation" class="navbar-default sidebar" style="position: fixed; margin-top: 0px">
+  <div class="sidebar-nav navbar-collapse">
+    <ul id="side-menu" class="nav">
+      <li>
+        <a href="#dependencies">依赖脚本</a>
+        <a href="#configurations">配置项</a>
+        <a href="#basic">基本用法</a>
+        <a href="#dataAttr">data属性配置</a>
+        <a href="#btwDate">时间段选择</a>
+        <a href="#getVal">获取选中值</a>
+        <a href="#events">常用事件</a>
+        <a href="#">返回顶部</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div id="page-wrapper">
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li class="active">datepicker</li>
+    </ol>
+  </div>
+
+################# 更新历史
+  <div class="panel panel-info">
+    <div class="panel-heading">更新历史</div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <h4 class="list-group-item-heading">2016-08-01 <span class="label label-danger">New</span>
+        </h4>
+        <p class="list-group-item-text">1. 新增了<a href="#dateTypeOpt">year、month</a>两种内置时间类型</p>
+      </li>
+    </ul>
+  </div>
+
+
+####################    依赖脚本 start    ####################
+  <div class="panel panel-warning" id="dependencies">
+    <div class="panel-heading">依赖脚本</div>
+    <div class="panel-body">
+<pre><code><xmp>
+<link type="text/css" rel="stylesheet"
+      href="\${staticSiteUrl}/lib/datetimepicker/css/bootstrap-datetimepicker.css">
+
+<script type="text/javascript" src="\${staticSiteUrl}/lib/moment/moment-with-locales.js"></script>
+<script type="text/javascript"
+        src="\${staticSiteUrl}/lib/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript"
+        src="\${staticSiteUrl}/mtime/datepicker/datepicker.js"></script></xmp></code></pre>
+    </div>
+  </div>
+
+
+####################    依赖脚本 start    ####################
+  <div class="panel panel-info" id="configurations">
+    <div class="panel-heading">配置项</div>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th width="170">配置项</th>
+        <th width="200">data属性</th>
+        <th width="200">值类型</th>
+        <th width="130">默认值</th>
+        <th>说明</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>dateType</td>
+        <td>data-date-type</td>
+        <td>string&enum</td>
+        <td><i>空字符串</i></td>
+        <td id="dateTypeOpt">
+          指定时间类型，提供了5种时间类型：<br>
+          "year"：年代，格式为 YYYY<br>
+          "month"：月份，格式为 YYYY-MM<br>
+          "date"：日期类型，格式为 YYYY-MM-DD<br>
+          "mdatetime"：不含秒的日期时间类型，格式为 YYYY-MM-DD HH:mm<br>
+          "sdatetime"：包含秒的日期时间类型，格式为 YYYY-MM-DD HH:mm:ss<br>
+          "mtime"：不含秒的时间类型，格式为 HH:mm<br>
+          "stime"：包含秒的时间类型，格式为 HH:mm:ss
+        </td>
+      </tr>
+      <tr>
+        <td>initElement</td>
+        <td>data-init-element</td>
+        <td>boolean</td>
+        <td>true</td>
+        <td>
+          是否自动初始化为标准时间控件样式(带有时间或日期图标的样式)<br>
+          会根据input是否位于.input-group中来判断是否需要执行初始化
+        </td>
+      </tr>
+      <tr>
+        <td>icon</td>
+        <td>data-icon</td>
+        <td>string</td>
+        <td>glyphicon glyphicon-calendar</td>
+        <td>
+          initElement=true时会自动初始化一个带有图标的样式<br>
+          根据此属性指定该图标样式，只能使用bootstrap样式的图标
+        </td>
+      </tr>
+      <tr>
+        <td>min</td>
+        <td>data-min</td>
+        <td>string</td>
+        <td><i>空字符串</i></td>
+        <td>该值为一个jQuery选择器，用来指定当前时间控件的最小日期来源</td>
+      </tr>
+      <tr>
+        <td>max</td>
+        <td>data-max</td>
+        <td>string</td>
+        <td><i>空字符串</i></td>
+        <td>该值为一个jQuery选择器，用来指定当前时间控件的最大日期来源</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="5"><a href="http://www.htmleaf.com/Demo/201503041459.html" target="_blank">更多配置项请查看datetimepicker.js插件配置项</a>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+
+####################    基本用法 start    ####################
+  <div class="panel panel-info" id="basic">
+    <div class="panel-heading">基本用法</div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-2">
+          <input id="test1" type='text' class="form-control"/>
+        </div>
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">选择配置</div>
+            <div class="panel-body">
+              <div class="radio">
+                <label><input type="radio" name="radio1" for="test1" data-name="dateType"
+                              data-value="year"> dataType="year"</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="radio1" for="test1" data-name="dateType"
+                              data-value="month"> dataType="month"</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="radio1" for="test1" data-name="dateType"
+                              data-value="date"> dataType="date"</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="radio1" for="test1" data-name="dateType"
+                              data-value="mdatetime"> dataType="mdatetime"</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="radio1" for="test1" data-name="dateType"
+                              data-value="sdatetime"> dataType="sdatetime"</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="radio1" for="test1" data-name="dateType"
+                              data-value="mtime"> dataType="mtime"</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="radio1" for="test1" data-name="dateType"
+                              data-value="stime"> dataType="stime"</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" name="radio1" for="test1" data-name="format"
+                              data-value="YYYY/MM/DD HH:mm:ss"> 自定义格式 YYYY/MM/DD HH:mm:ss</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="panel panel-default">
+            <div class="panel-heading">选择结果</div>
+            <div class="panel-body" for="test1"></div>
+          </div>
+        </div>
+      </div>
+      <pre><code><xmp><input id="test1" type='text' class="form-control"/></xmp></code></pre>
+      <pre><code>$("#test1").dp()</code></pre>
+      <pre><code><xmp><input id="test1" type='text' class="form-control"
+                             data-format="YYYY/MM/DD HH:mm:ss" //自定义时间格式
+   role="datepicker" /></xmp></code></pre>
+    </div>
+  </div>
+
+
+####################    data属性配置 start    ####################
+  <div class="panel panel-info" id="dataAttr">
+    <div class="panel-heading">data属性配置</div>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th width="300">效果预览</th>
+        <th width="700">HTML代码</th>
+        <th>选择结果</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><input id="tt1" type='text' class="form-control" data-date-type="date"
+                   role="datepicker"/></td>
+        <td></td>
+        <td>
+          <div for="tt1"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><input id="tt2" type='text' class="form-control" data-date-type="mdatetime"
+                   role="datepicker"/></td>
+        <td></td>
+        <td>
+          <div for="tt2"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><input id="tt3" type='text' class="form-control" data-date-type="sdatetime"
+                   role="datepicker"/></td>
+        <td></td>
+        <td>
+          <div for="tt3"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><input id="tt4" type='text' class="form-control" data-date-type="mtime"
+                   role="datepicker"/></td>
+        <td></td>
+        <td>
+          <div for="tt4"></div>
+        </td>
+      </tr>
+      <tr>
+        <td><input id="tt5" type='text' class="form-control" data-date-type="stime"
+                   role="datepicker"/></td>
+        <td></td>
+        <td>
+          <div for="tt5"></div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="alert alert-warning">使用属性<strong>role="datepicker"</strong>可以自动调用当前元素的.datepicker()方法进行初始化
+    </div>
+  </div>
+
+
+####################    时间段选择 start    ####################
+  <div class="panel panel-info" id="btwDate">
+    <div class="panel-heading">时间段选择</div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-2">
+          <input id="test2" type='text' class="form-control" data-date-type="mdatetime"
+                 role="datepicker" data-max="#test3"/>
+        </div>
+        <div class="col-md-2">
+          <input id="test3" type='text' class="form-control" data-date-type="mdatetime"
+                 role="datepicker" data-min="#test2"/>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-default" id="clearSlot">清空</button>
+        </div>
+      </div>
+
+      <pre class="mt10"><code><xmp><input id="test2" type='text' class="form-control"
+                                          data-date-type="sdatetime" role="datepicker"
+                                          data-max="#test3"/>
+<input id="test3" type='text' class="form-control" data-date-type="sdatetime" role="datepicker"
+       data-min="#test2"/></xmp></code></pre>
+    </div>
+  </div>
+
+
+####################    获取选中值 start    ####################
+  <div class="panel panel-info" id="getVal">
+    <div class="panel-heading">获取选中值</div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-2">
+          <input id="test4" type='text' class="form-control" data-date-type="mdatetime"
+                 role="datepicker"/>
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-primary" for="test4"> 获取选中时间</button>
+        </div>
+        <div class="col-md-9">
+          <div class="panel panel-warning mt10">
+            <div class="panel-heading">选择结果</div>
+            <div class="panel-body" for="test4">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <pre><code><xmp><input id="test4" type='text' class="form-control"
+                             role="datepicker"/></xmp></code></pre>
+      <pre><code>$("#test4").dpVal()   //获取时间文本，如果作用域input，可以获取input的val()，如果作用域为.input-group容器，则使用此方法获取<br>$("#test4").dpDate() //获取选中时间的Date类型值</code></pre>
+    </div>
+  </div>
+
+
+####################    常用事件 start    ####################
+  <div class="panel panel-info" id="events">
+    <div class="panel-heading">常用事件</div>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th width="150">事件名称</th>
+        <th>触发时机</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>dp.change</td>
+        <td>选择一个时间后触发该事件</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+#setCss(
+  "/lib/datetimepicker/css/bootstrap-datetimepicker.css"
+)
+
+#setJs(
+  "/lib/moment/moment-with-locales.js",
+  "/lib/datetimepicker/js/bootstrap-datetimepicker.js",
+  "/mtime/datepicker/datepicker.js",
+  "/js/view/datepicker/demo.js"
+)

@@ -1,0 +1,122 @@
+#parse("layout/header.vm")
+
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">Loading</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Loading</h1>
+
+            <p>在一些耗时操作中(比如加载数据), 为提升用户体验, 我们需要给用户一些等待指示, 同时还要阻止用户操作相关数据区域, Loading 组件就是用来处理这类事情的, 此组件的动画效果完全由 CSS 实现.</p>
+
+            <h3>样式引入</h3>
+            <pre><code><xmp><link type="text/css" rel="stylesheet" href="${staticSiteUrl}/mtime/loading/mtime.loading.css"></xmp></code></pre>
+
+            <h3>脚本引入</h3>
+            <pre><code><xmp><script type="text/javascript" src="${staticSiteUrl}/mtime/loading/mtime.loading.js"></xmp></code></pre>
+
+        <h3>示例</h3>
+            <pre><code class="typescript">// 显示
+let loading = Mtime.UI.Loading.show("#form-test");
+// 隐藏
+loading.hide();
+// 切换显示/隐藏
+let loading = new Mtime.UI.Loading("#form-test", {maskColor: "black", spinner: "spinner2"});
+loading.toggle();</code></pre>
+
+            <div class="panel panel-info">
+                <div class="panel-heading"><i class="fa fa-info fa-fw"></i> 示例表单</div>
+                <div class="panel-body">
+                    <form id="form-test" style="padding:20px" data-toggle="validator" onsubmit="return false" class="form-horizontal" role="form" enctype="multipart/form-data" data-toggle="checker" novalidate="true">
+                        <div class="form-group">
+                            <div class="control-group has-feedback">
+                                <label for="txt-col1" class="col-sm-2 control-label">第一列</label>
+                                <div class="col-sm-4">
+                                    <input name="col1" class="form-control" id="txt-col1" placeholder="" data-v-rule="required" data-v-msg-required="名字不能为空" type="text">
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <span class="help-block">请输入第一列</span>
+                                </div>
+                            </div>
+                            <div class="control-group has-feedback">
+                                <label for="txt-col2" class="col-sm-2 control-label">第二列</label>
+                                <div class="col-sm-4">
+                                    <input name="col2" class="form-control" id="txt-col2" placeholder="" data-v-rule="length" data-v-arg-length="3~6" data-v-msg-length="请输入 3-6 个字符" type="text">
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <span class="help-block">请输入第二列</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="txt-name" class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <input name="user.name" class="form-control" id="txt-name" placeholder="Name" data-v-rule="required;length" data-v-arg-length="3~6" data-v-msg-required="名字不能为空" data-v-msg-length="请输入 3-6 个字符" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <span class="help-block">请输入真实姓名</span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="txt-email" class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input name="user.email" data-v-rule="required;email" class="form-control" id="txt-email" placeholder="Email" type="email">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="error-list"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tags" class="col-sm-2 control-label">标签</label>
+                            <div class="col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="user.tags[]" value="1" type="checkbox" data-v-rule="checked" data-v-arg-checked="2" data-v-msg-checked="请至少选择两项"> 白
+                                    </label>
+                                    <label>
+                                        <input name="user.tags[]" value="2" type="checkbox" data-v-rule="checked" data-v-arg-checked="2" data-v-msg-checked="请至少选择两项"> 富
+                                    </label>
+                                    <label>
+                                        <input name="user.tags[]" value="3" type="checkbox" data-v-rule="checked" data-v-arg-checked="2" data-v-msg-checked="请至少选择两项"> 美
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="apply" type="checkbox"> 是否提交审核
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <button id="btn1" class="btn btn-default">样式一</button>
+            <button id="btn2" class="btn btn-default">样式二</button>
+            <button id="btn3" class="btn btn-default">样式三</button>
+            <button id="btn4" class="btn btn-default">样式四</button>
+            <button id="btn5" class="btn btn-default">样式五</button>
+            <button id="btn6" class="btn btn-default">样式六</button>
+            <button id="btn7" class="btn btn-default">样式七</button>
+            <button id="btn8" class="btn btn-default">全屏</button>
+
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <br/>
+
+</div>
+
+
+#setCss(
+    "/mtime/loading/mtime.loading.css"
+)
+
+#setJs(
+    "/mtime/loading/mtime.loading.js",
+    "/js/view/ui/loading.js"
+)

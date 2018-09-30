@@ -1,0 +1,285 @@
+@import "variables";
+
+/* 框架 */
+#wrapper {
+    background-color: #ecf0f5;
+    position: relative;
+    clear: both;
+    overflow: hidden;
+}
+#content {
+    padding: 15px;
+    background-color: white;
+}
+
+/* 超小屏幕（手机，小于 768px） 移动设备优先 */
+#header {
+    height: 60px;
+    border-bottom: 1px solid #0f7cd7;
+    overflow: hidden;
+    clear: both;
+    .logo {
+        background: url("../img/logo.png") no-repeat center;
+        background-size: contain;
+        width: 50px;
+        height: 60px;
+        display: inline-block;
+        margin-left: 20px;
+        vertical-align: middle;
+        margin-right: 15px;
+    }
+    h5 {
+        color: #0f7cd7;
+        font-size: 20px;
+        line-height: 60px;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0;
+    }
+    .navbar-right {
+        margin-right: 0;
+    }
+
+    .navbar-nav > li {
+        line-height: 60px;
+        margin-right: 20px;
+        a {
+            padding: 0;
+            line-height: 60px;
+            &:focus, &:hover {
+                background: transparent;
+            }
+        }
+    }
+}
+
+//nav
+.navbar-blue {
+    background: #0f7cd7;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+    .navbar-brand {
+        color: #fff;
+    }
+    .navbar-header {
+        display: block;
+        //用户信息
+        .header-user{
+            float: right;
+            color: #fff;
+            width: 44px;
+            line-height: 50px;
+        }
+    }
+    .navbar-toggle {
+        border: 1px solid #fff;
+    }
+    .navbar-toggle .icon-bar {
+        background: #fff;
+    }
+    .navbar-collapse {
+        background: #f8f8f8;
+    }
+    .navbar-nav {
+        list-style: none;
+        padding-top:15px;
+        li a {
+            display: inline-block;
+            color: #fff;
+            font-size: 15px;
+            padding:0;
+            margin-right: 20px;
+            &:hover, &:focus {
+                border-bottom: 2px solid #fff;
+                text-decoration: none;
+                background: transparent;
+            }
+        }
+        li.active a{
+            border-bottom: 2px solid #fff;
+            text-decoration: none;
+        }
+    }
+    // 用户信息
+    .header-usertip{
+        background: #f8f8f8;
+        margin-left: -15px;
+        margin-right: -15px;
+        dl{
+            margin-bottom: 0;
+            padding: 15px;
+        }
+        dd{
+            padding: 6px 0;
+            text-align: right;
+        }
+    }
+}
+
+// sider menu
+.siderbar-menu {
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid #e8e8e8;
+    li {
+        color: #666;
+        line-height: 40px;
+        border-bottom: 1px solid #e8e8e8;
+        .icon-arrow-right {
+            border: 6px solid transparent;
+            border-left-color: #666;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            display: block;
+            position: relative;
+            margin-top: 14px;
+        }
+        > div {
+            padding: 0 12px 0 16px;
+            a {
+                color: #333;
+                display: block;
+                &:hover {
+                    text-decoration: none;
+                    color: #08c;
+                }
+            }
+        }
+        &.curr > div {
+            background: #01479d;
+            color: #fff;
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
+            .icon-arrow-right {
+                border-top-color: #fff;
+                border-left-color: transparent;
+                margin-top: 16px;
+            }
+        }
+
+        .pull-right {
+            display: none;
+        }
+    }
+    .treeview-menu {
+        list-style: none;
+        padding: 0;
+        background: #f1f1f1;
+        li {
+            border: none;
+            padding: 0 12px 0 32px;
+
+            > div {
+                padding: 0 12px 0 32px;
+                color: #333;
+            }
+            a {
+                color: #333;
+                display: block;
+            }
+            &.cur > a {
+                color: #1e93d2;
+            }
+        }
+    }
+    .three-menu {
+        list-style: none;
+        padding: 0;
+        li {
+            border: none;
+            padding: 0;
+            position: relative;
+            a {
+                display: block;
+                padding: 0 12px 0 65px;
+            }
+            .icon-arrow-right {
+                display: none;
+            }
+            &.on {
+                a {
+                    color: #1e93d2;
+
+                }
+                .icon-arrow-right {
+                    position: absolute;
+                    right: 12px;
+                    top: 50%;
+                    margin-top: -6px;
+                    border: 6px solid transparent;
+                    border-left-color: #1e93d2;
+                    width: 0;
+                    height: 0;
+                    overflow: hidden;
+                    display: block;
+                }
+            }
+        }
+    }
+}
+@media (max-width: @screen-sm-min) {
+    //左侧导航
+    #sidebar , #header .navbar-right {
+        display: none;
+    }
+}
+/* 小屏幕（平板，大于等于 768px） */
+@media (min-width: @screen-sm-min) {
+
+    //nav
+    .navbar-blue {
+        .navbar-header {
+            display: none;
+        }
+        .navbar-collapse {
+            background: transparent;
+            margin: 0 -15px;
+        }
+    }
+
+    //sidebar
+    #sidebar {
+        position: absolute;
+        width: 200px;
+        background: #ecf0f5;
+    }
+
+    #content {
+        margin-left: 200px;
+    }
+
+}
+
+/* 中等屏幕（桌面显示器，大于等于 992px） */
+@media (min-width: @screen-md-min) {
+
+    //nav
+    .navbar-blue {
+        .navbar-header {
+            display: none;
+        }
+        .navbar-collapse {
+            background: transparent;
+        }
+    }
+
+}
+
+/* 大屏幕（大桌面显示器，大于等于 1200px） */
+@media (min-width: @screen-lg-min) {
+
+    //nav
+    .navbar-blue {
+        .navbar-header {
+            display: none;
+        }
+        .navbar-collapse {
+            background: transparent;
+        }
+    }
+
+}

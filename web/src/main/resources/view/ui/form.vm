@@ -1,0 +1,263 @@
+#parse("layout/header.vm")
+
+<div id="page-wrapper">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">Form</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Form</h1>
+
+            <p>此组件封装了表单的一些常用方法</p>
+
+            <h3>脚本引入</h3>
+            <pre><code><xmp><script type="text/javascript" src="${staticSiteUrl}/mtime/validator/mtime.validator.js">
+<script type="text/javascript" src="${staticSiteUrl}/mtime/form/mtime.form.js"></xmp></code></pre>
+            <p>其中 mtime.validator.js 只有在需要集成数据验证功能时才需要引入(注意: 总部系统后台门户默认布局模板已经集成了这些组件, 不再需要单独引入这些 JS)</p>
+
+            <h3>客户端示例</h3>
+            <pre><code class="typescript">let form = new Form("#form-test");
+// 序列化
+$("#btn-serialize").click(e => {
+    let obj = form.serialize();
+    alert(JSON.stringify(obj));
+});
+// 反序列化
+$("#btn-deserialize").click(e => {
+    form.deserialize({
+        user: {
+            name: "sha",
+            email: "test@test.com",
+        },
+        apply: true
+    });
+});
+// 验证和提交
+$("#btn-submit").click(e => {
+    form.validate() && form.submit("/test").json(r => {
+        alert(JSON.stringify(r));
+    });
+});
+// 重置表单(仅对真正的 form 元素有效)
+$("#btn-reset").click(e => {
+    form.reset();
+});
+// 清除数据
+$("#btn-clear").click(e => {
+    form.clear();
+});</code></pre>
+
+            <h3>服务端示例</h3>
+            <pre><code class="typescript">@RequestMapping(value = "form/submit", method = RequestMethod.POST)
+@ResponseBody
+public FormInfo formSubmit(@RequestBody FormInfo info) {
+    info.getUser().setId(10000);
+    return info;
+}</code></pre>
+
+            <div class="panel panel-info">
+                <div class="panel-heading"><i class="fa fa-info fa-fw"></i> 表单示例</div>
+                <div class="panel-body">
+                    <form id="form-test" style="padding:20px" onsubmit="return false" class="form-horizontal" role="form" enctype="multipart/form-data" data-toggle="checker" novalidate="true">
+                        <div class="form-group">
+                            <div class="control-group has-feedback">
+                                <label for="txt-col1" class="col-sm-2 control-label">第一列</label>
+                                <div class="col-sm-4">
+                                    <input name="col1" class="form-control" id="txt-col1" placeholder="" data-v-rule="required" data-v-msg-required="名字不能为空" type="text">
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <span class="help-block">请输入第一列</span>
+                                </div>
+                            </div>
+                            <div class="control-group has-feedback">
+                                <label for="txt-col2" class="col-sm-2 control-label">第二列</label>
+                                <div class="col-sm-4">
+                                    <input name="col2" class="form-control" id="txt-col2" placeholder="" data-v-rule="length" data-v-arg-length="3~6" data-v-msg-length="请输入 3-6 个字符" type="text">
+                                    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                    <span class="help-block">请输入第二列</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="txt-name" class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <input name="user.name" class="form-control" id="txt-name" placeholder="Name" data-v-rule="required;length" data-v-arg-length="3~6" data-v-msg-required="名字不能为空" data-v-msg-length="请输入 3-6 个字符" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <span class="help-block">请输入真实姓名</span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="txt-email" class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input name="user.email" data-v-rule="required;email" class="form-control" id="txt-email" placeholder="Email" type="email">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="error-list"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tags" class="col-sm-2 control-label">标签</label>
+                            <div class="col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="user.tags[]" value="1" type="checkbox" data-v-rule="checked" data-v-arg-checked="2" data-v-msg-checked="请至少选择两项"> 白
+                                    </label>
+                                    <label>
+                                        <input name="user.tags[]" value="2" type="checkbox" data-v-rule="checked" data-v-arg-checked="2" data-v-msg-checked="请至少选择两项"> 富
+                                    </label>
+                                    <label>
+                                        <input name="user.tags[]" value="3" type="checkbox" data-v-rule="checked" data-v-arg-checked="2" data-v-msg-checked="请至少选择两项"> 美
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="apply" type="checkbox"> 是否提交审核
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button id="btn-submit" type="submit" class="btn btn-primary">提交</button>
+                                <button id="btn-serialize" class="btn btn-default">序列化</button>
+                                <button id="btn-deserialize" class="btn btn-default">反序列化</button>
+                                <button id="btn-reset" class="btn btn-default">重置</button>
+                                <button id="btn-clear" class="btn btn-default">清除</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <h3>数据验证</h3>
+            <p>表单控件数据验证大致分如下几部实现</p>
+            <ol>
+                <li>待验证的 INPUT 元素增加 data-v-rule 属性, 多个验证规则用分号隔开, 如: data-v-rule="required;email"</li>
+                <li>在调用 submit 方法前调用 validate 验证数据(见上面的示例)</li>
+                <li>可以给 INPUT 元素增加 data-v-msg-{rule} 属性来定制规则的错误提示, 如: data-v-msg-email="电子邮箱不合法"</li>
+                <li>可以给 INPUT 元素增加 data-v-arg-{rule} 属性来传递规则的参数, 如: data-v-arg-length="6~10"</li>
+                <li>内置了 12 个验证规则, 可以自行扩展</li>
+            </ol>
+            <div class="alert alert-info">注意表单的 HTML 结构要符合 Bootstrap 规范, 否则可能不能达到理想的效果</div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading"><i class="fa fa-info fa-fw"></i> 验证示例</div>
+                <div class="panel-body">
+                    <form id="form-valid" style="padding:20px" onsubmit="return false" class="form-horizontal" role="form" novalidate="true">
+                        <div class="form-group has-feedback">
+                            <label for="rule1" class="col-sm-2 control-label">native - HTML5 原生验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule1" name="rule1" class="form-control" data-v-rule="native" required type="email">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="rule2" class="col-sm-2 control-label">required - 必填验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule2" name="rule2" class="form-control" data-v-rule="required" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="rule3" class="col-sm-2 control-label">checked - 选择项个数验证</label>
+                            <div class="col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="rule3[]" value="a" type="checkbox" data-v-rule="checked" data-v-arg-checked="2" data-v-msg-checked="请至少选择两项"> 白
+                                    </label>
+                                    <label>
+                                        <input name="rule3[]" value="b" type="checkbox" data-v-rule="checked" data-v-arg-checked="2" data-v-msg-checked="请至少选择两项"> 富
+                                    </label>
+                                    <label>
+                                        <input name="rule3[]" value="c" type="checkbox" data-v-rule="checked" data-v-arg-checked="2" data-v-msg-checked="请至少选择两项"> 美
+                                    </label>
+                                </div>
+                            </div>
+                        </div>                         
+                        <div class="form-group has-feedback">
+                            <label for="rule4" class="col-sm-2 control-label">email - 电子邮箱验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule4" name="rule4" class="form-control" data-v-rule="email" type="email">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="rule5" class="col-sm-2 control-label">match - 匹配验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule5" name="rule5" class="form-control" data-v-rule="match" data-v-arg-match="rule4" data-v-msg-match="请再次输入上面的电子邮箱" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="rule6" class="col-sm-2 control-label">length - 长度验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule6" name="rule6" class="form-control" data-v-rule="length" data-v-arg-length="2~4" data-v-msg-length="请输入 2-4 个字符" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="rule7" class="col-sm-2 control-label">width - 宽度验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule7" name="rule7" class="form-control" data-v-rule="width" data-v-arg-width="2~4" data-v-msg-width="请输入 2-4 个字符(中文字符算两个)" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>                        
+                        <div class="form-group has-feedback">
+                            <label for="rule8" class="col-sm-2 control-label">url - HTTP/FTP 地址验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule8" name="rule8" class="form-control" data-v-rule="url" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="rule9" class="col-sm-2 control-label">ip - IPV4 地址验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule9" name="rule9" class="form-control" data-v-rule="ip" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="rule10" class="col-sm-2 control-label">integer - 整数验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule10" name="rule10" class="form-control" data-v-rule="integer" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="rule11" class="col-sm-2 control-label">regex - 正则表达式验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule11" name="rule11" class="form-control" data-v-rule="regex" data-v-arg-regex="^[1-9][0-9]{0,7}$" data-v-msg-regex="请输入正整数" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="rule12" class="col-sm-2 control-label">remote - 服务器端验证</label>
+                            <div class="col-sm-10">
+                                <input id="rule12" name="rule12" class="form-control" data-v-rule="remote" data-v-arg-remote="/ui/form/validate" type="text">
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                        </div>                                                                                                                                                                        
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button id="btn-valid-submit" type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <br/>
+
+</div>
+
+#setJs(
+    "/js/view/ui/form.js"
+)
+

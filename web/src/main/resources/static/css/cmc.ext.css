@@ -1,0 +1,116 @@
+/** 前端样式 start **/
+
+/**时间控件 begin**/
+.calendar-box{display:table;position:relative;zoom:1;}
+.calendar-box label{width: 68px;text-align: right;margin:0!important;font-weight:normal;display:inline-block;vertical-align:middle;}
+.calendar-box .bootstrap-datetimepicker-widget.dropdown-menu{width:auto;}
+.calendar-box .input-group {display:inline-block;vertical-align: middle;}
+.calendar-box .input-group .input-group-addon{padding:2px 0 0 5px;background:none;border:0;float:left;}
+.calendar-box .input-group input{height:26px;float:left;padding:5px 2px 5px 8px; box-shadow: inset 0 1px 1px rgba(0,0,0,.075);}
+.calendar-box .input-group .glyphicon{width:auto;top:5px;}
+.calendar-box .picker-switch{text-align:center;}
+.calendar-box .datepicker{padding:0 5px;}
+.calendar-box .table-condensed th{background:none;}
+.calendar-box .table-condensed th,.calendar-box .table-condensed td{padding:6px 12px;text-align:center;border:0!important;}
+.calendar-box .table-condensed td .btn{background:none;border:0;}
+.calendar-box .table-condensed td .btn:hover{background:none;border:0;}
+.calendar-box .table-condensed .prev:hover,.calendar-box .table-condensed .next:hover,.calendar-box .table-condensed .picker-switch:hover,.calendar-box .table-condensed tbody td:hover{background:#ededed;border-radius:4px;}
+.calendar-box .accordion-toggle table{width:100%;}
+.calendar-box .datepicker-months{width:256px;}
+.calendar-box .datepicker-months .table-condensed td:hover{background:none;border-radius:0;}
+.calendar-box .datepicker-months .month{ border-radius: 4px;cursor: pointer;display: inline-block;height: 54px;line-height: 54px;margin: 2px 1.5px;width: 54px;}
+.calendar-box .datepicker-months .month:hover{background:#ededed;border-radius:4px;}
+.calendar-box .datepicker-years{width:18em;}
+.calendar-box .datepicker-years .table-condensed td:hover{background:none;border-radius:0;}
+.calendar-box .bootstrap-datetimepicker-widget td span.active:hover{background:#428bca;color:#fff!important;}
+.calendar-box .bootstrap-datetimepicker-widget td.active,.calendar-box .bootstrap-datetimepicker-widget td.active:hover{background-color: #428bca!important;}
+/**时间控件 end**/
+/**下拉控件 begin**/
+.select2-container{min-width:160px;max-width:220px;width:auto!important;}
+.select2-container .select2-selection--single .select2-selection__rendered{font-size:13px;line-height:26px!important;}
+.select2-container .select2-selection--single .select2-selection__arrow{height:20px!important;top:3px!important;}
+.select2-container .select2-selection--multiple{min-height:26px!important;border:1px solid #ccc!important;border-radius:6px!important;}
+.select2-container .select2-selection--single{height:26px!important;border:1px solid #ccc!important;border-radius:6px!important;}
+.select2-container span.selection{width: 140px;text-align: left;}
+.select2-container--default.select2-container--focus .select2-selection--multiple{border: 1px solid #5897fb!important;box-shadow:0 0 5px rgba(50,150,255,0.75);}
+.select2-container--default .select2-selection--multiple .select2-selection__rendered{display:block!important;}
+.select2-container .select2-search--inline .select2-search__field{margin:3px 0 3px!important;}
+.select2-container--default .select2-selection--multiple .select2-selection__rendered li{float:none;margin-right:10px;}
+.select2-container--default .select2-selection--multiple .select2-selection__clear{margin:0!important;}
+/**下拉控件 end**/
+/**多选控件 begin**/
+.ui-multiselect-menu input[type="text"]{width:100%;}
+.ui-multiselect-header { margin-bottom:3px; padding:3px 0 3px 4px; }
+.ui-multiselect-header ul { font-size:13px }
+.ui-multiselect-header ul li { float:left; padding:0 6px 0 6px; }
+.ui-multiselect-header a { text-decoration:none;}
+.ui-multiselect-header a:hover { text-decoration:underline; }
+.ui-multiselect-header span.ui-icon { float:left; }
+.ui-multiselect-header li.ui-multiselect-close { float:right; text-align:right; padding-left:0 ;}
+.ui-multiselect-menu { padding:3px; position:absolute; z-index:10000; text-align: left; }
+.ui-multiselect-checkboxes { position:relative /* fixes bug in IE6/7 */; overflow-y:auto ;height:85px!important;/*修改高度*/}
+.ui-multiselect-checkboxes label { cursor:pointer; display:block; border:1px solid transparent; padding:3px 1px;margin-bottom:0; word-break:break-all; }
+.ui-multiselect-checkboxes label input { position:relative; top:1px; }
+.ui-multiselect-checkboxes li { clear:both; font-size:13px; padding-right:3px;border: 1px solid transparent; }
+.ui-multiselect-checkboxes li:hover { border: 1px solid #e9e9e9;background: #e9e9e9;font-weight:bold;color: #333;}
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label { text-align:center; font-weight:bold; border-bottom:1px solid ;}
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label a { display:block; padding:3px; margin:1px 0; text-decoration:none ;}
+.ui-multiselect-filter{padding:2px;}
+.ui-multiselect-filter input{width:140px;height:26px;display:inline-block;padding:2px 10px;border-radius:6px;margin-left:0px;border:1px solid #ccc;}
+.ui-helper-clearfix:before,
+.ui-helper-clearfix:after {content: "";display: table;border-collapse: collapse;}
+.ui-helper-clearfix:after {clear: both;}
+.ui-helper-clearfix {min-height: 0; /* support: IE7 */}
+.ui-widget-content {width:160px !important;border: 1px solid #dddddd;color: #333333;background:#fff;display:none;}
+.ui-widget-content a {color: #333333;}
+.ui-widget-header {background: #e9e9e9 50% 50% repeat-x;color: #333;font-weight: bold;}
+.ui-widget-header a {color: #333;}
+.ui-multiselect{text-align:left; width: 160px!important;height: 26px !important; padding: 2px 10px !important; display: inline-block;/*统一宽度*/}
+.ui-multiselect span{display:inline;}
+.ui-multiselect span.ui-icon{float:right;}
+/* 新增选框超出隐藏 */
+.ui-multiselect span:nth-child(2){display:inline-block; position: absolute; white-space: nowrap; overflow: hidden; width: 126px;text-overflow: ellipsis;}
+.ui-icon {display: block;text-indent: -99999px;overflow: hidden;background-repeat: no-repeat;}
+.ui-icon {width: 16px!important;height: 16px;}
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label {border:0;border-bottom: 1px solid;font-weight: bold;text-align: center;}
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label:hover{background:none;color:#333;border:0;border-bottom:1px solid;}
+.ui-widget-header .ui-icon {background-image: url("../img/block-icon-atlas.png");}
+.ui-icon-check {background-position: -64px -144px;}
+.ui-icon-closethick {background-position: -96px -128px;}
+.ui-icon-circle-close {background-position: -32px -192px;}
+.ui-state-default .ui-icon {background-image: url("../img/block-icon-atlas.png");}
+.ui-icon-triangle-1-s {background-position: -64px -16px;}
+
+/**多选控件 end**/
+
+/** 前端样式 end **/
+
+/**按钮动画 begin**/
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin .7s infinite linear;
+    -moz-animation: spin .7s infinite linear;
+    -o-animation: spin .7s infinite linear;
+    -ms-animation: spin .7s infinite linear;
+}
+@-webkit-keyframes spin{
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+@-moz-keyframes spin{
+    from { -moz-transform: rotate(0deg);}
+    to { -moz-transform: rotate(360deg);}
+}
+@-o-keyframes spin{
+    from { -o-transform: rotate(0deg);}
+    to { -o-transform: rotate(360deg);}
+}
+@-ms-keyframes spin {
+    from  { -ms-transform: rotate(0deg); }
+    to { -ms-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+/**按钮动画 end**/

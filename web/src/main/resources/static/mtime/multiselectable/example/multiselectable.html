@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MultiSelectable</title>
+    <link type="text/css" rel="stylesheet" href="../../../lib/bootstrap/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="../../../lib/jquery.ui/css/jquery-ui.min.css">
+    <link type="text/css" rel="stylesheet" href="../../../lib/jquery.ui/multiselect/css/jquery.multiselect.css">
+</head>
+<body>
+
+<select role="multiselectable"
+        data-source="data.js"
+        data-type="jsonp"
+        multiple>
+    <optgroup label="group1">
+        <option value="11">option 11</option>
+        <option value="12">option 12</option>
+    </optgroup>
+    <optgroup label="group2">
+        <option value="21">option 21</option>
+        <option value="22">option 22</option>
+    </optgroup>
+</select>
+
+<script src="../../../lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../lib/jquery.ui/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../../../lib/jquery.ui/multiselect/js/jquery.multiselect.min.js"></script>
+<script type="text/javascript" src="../../../lib/jquery.ui/multiselect/i18n/jquery.multiselect.zh-cn.js"></script>
+<script src="../multiselectable.ext.js"></script>
+
+<script>
+//    $("select").multiselect()
+//            .on("change", function() {
+//                alert(1)
+//            })
+</script>
+</body>
+</html>
